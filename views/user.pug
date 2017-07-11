@@ -1,0 +1,26 @@
+doctype html
+html
+    head
+        include ../includes/default_page.pug
+        +head('Profile')
+
+    body
+        .container
+            +header(username)
+            +navvy(1)
+
+            input(type='button' class='btn btn-primary' value='Back' onclick='window.history.back();')
+
+            +row(4, 1)
+                h2='Username '
+                    span(class='label label-primary')= username
+
+            +row(8, 1)
+                h2='Password '
+                    span(class='label label-warning')= password
+            br
+            +row(2, 1)
+                .form-group
+                    form(action="/delete/" + userid method='GET')
+                        input(type='submit' class='btn btn-danger' value='Delete')
+

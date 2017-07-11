@@ -1,0 +1,13 @@
+doctype html
+html
+    head
+        include ../includes/default_page.pug
+        +head('Users')
+    body
+        .container
+            +header('Users')
+            +navvy(1)
+            +row(8, 2)
+                each user, index in users
+                    a.form-control(href='/user?userid=' + user.userid  class='btn btn-link' style='background-color:#f8f8f8;')= user.name
+

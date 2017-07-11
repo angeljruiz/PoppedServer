@@ -1,0 +1,19 @@
+.jumbotron h1 {
+    color: #2c86d3;
+}
+.jumbotron {
+    padding-top: 15px;
+    padding-bottom: 1px;
+    margin-top: 30px;
+    margin-bottom: 0px;
+    background-color: #f8f8f8;
+}
+
+.nav>li>a {
+    padding: 15px 25px;
+}
+
+.fa-play {
+    position: relative;
+    left: -25px;
+}

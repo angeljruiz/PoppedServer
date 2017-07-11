@@ -1,0 +1,27 @@
+mixin head(title)
+    title= title
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    link(href='css/bootstrap.min.css' rel='stylesheet')
+    link(href='css/font-awesome.min.css' rel='stylesheet')
+    link(href='css/style.css' rel='stylesheet')
+    script(src='/js/jq.js')
+
+mixin header(title)
+    .jumbotron.text-center
+        h1= title
+
+mixin navvy(index)
+    -
+        var pages = [ 'Home', 'Users', 'Tiles', 'About'];
+        var urls = [ '/', '/list', '/game', '/about' ];
+    nav(class='navbar navbar-default')
+        ul(class='nav nav-pills')
+            each i in [0, 1, 2, 3]
+                li(class={active: index == i}): a(href=urls[i])= pages[i]
+
+
+mixin row(size, offset)
+    .row
+        div(class='col-md-' + size class=offset==0? '' : 'col-md-offset-' + offset)
+            if block
+                block

@@ -1,0 +1,25 @@
+//
+   Created by angel on 6/13/17.
+
+doctype html
+html
+    head
+        include ../includes/default_page.pug
+        +head('Tiles')
+    body
+        script(src='js/pathfinder.js')
+        script(src='js/board.js')
+        script(src='js/game.js')
+        .container
+            +header('Tiles')
+            +navvy(2)
+
+            +row(2, 6)
+                i(class='fa f a-play fa-2x')
+            br
+            +row(10, 2)
+                canvas(id='canvy' width=800 height=640 style="border:1px solid #000000; position:relative; top:0px; left:-15px")
+
+            br
+            br
+            br

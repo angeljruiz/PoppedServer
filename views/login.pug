@@ -1,0 +1,31 @@
+doctype html
+html
+    head
+        include ../includes/default_page.pug
+        +head('Login')
+    body
+        script.
+                function check() {
+                    var user = $("#username").val();
+                    var pass = $("#password").val();
+                    if (user == '' || pass == '') {
+                        alert("Username or password invalid");
+                        return false;
+                    }
+                    return true;
+                }
+        .container
+            +header('Login')
+            +navvy(0)
+
+            .form-group
+                form(action='/new' method='POST')
+                    +row(4, 4)
+                        input.form-control(type='text' name='username' id='username' placeholder='Username')
+                        br
+                    +row(4, 4)
+                        input.form-control(type='password' name='password' id='password' placeholder='Password')
+                        br
+                    +row(2, 5)
+                        input.form-control(type='submit' onclick='return check();'  class='btn btn-primary' value='Register')
+
