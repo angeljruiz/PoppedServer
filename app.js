@@ -74,3 +74,8 @@ app.get('/delete/:userid', (req, res) => {
         res.redirect('/list');
     });
 });
+
+app.get('/getUsers', loadUsers, (req, res) => {
+    let temp = JSON.stringify(users);
+    res.send(temp);
+});
