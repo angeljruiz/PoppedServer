@@ -15,9 +15,7 @@ html
             .row
                 //.form-group
                 div(class='col-md-1')
-                    input(type='button' class='btn btn-primary' value='Back' onclick='window.history.back();')
-                div(class='col-md-1')
-
+                    a(class='btn btn-primary' href='/list') Back
 
             .row
                 div(class='col-md-2')
@@ -42,5 +40,4 @@ html
                         each message, index in messages
                             tr
                                 td(class='text-center')= message.messages
-
 

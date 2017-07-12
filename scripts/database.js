@@ -66,8 +66,6 @@ class Database {
         });
     }
     saveMessge(oid, message, fn) {
-        console.log(oid);
-        console.log(message);
         pool.query('INSERT INTO messages (message, oid) VALUES ($1, $2)', [message, oid], (err, res) => {
             if(err)
                 return console.error('error running query', err);

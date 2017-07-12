@@ -41,7 +41,7 @@ function selectUser(req, res, next) {
 }
 
 function loadMessages(req, res, next) {
-    db.loadMessages(users.id, (data) => {
+    db.loadMessages(req.query.id || req.body.id, (data) => {
         users.messages = data;
         next();
     });
@@ -49,7 +49,7 @@ function loadMessages(req, res, next) {
 function saveMessage(req, res, next) {
     db.saveMessge(req.body.id, req.body.message, () => {
         next();
-    })
+    });
 }
 
 
@@ -90,6 +90,10 @@ app.get('/delete/:id', (req, res) => {
 app.get('/getUsers', loadUsers, (req, res) => {
     let temp = JSON.stringify(users);
     res.send(temp);
+});
+
+app.get('/getMessages', loadMessages, (req, res) => {
+    res.send(JSON.stringify(users.messages));
 });
 
 app.post('/saveMessage', selectUser, saveMessage, loadMessages, (req, res) => {
