@@ -34,10 +34,16 @@ function createUser(req, res, next) {
 }
 
 function selectUser(req, res, next) {
-    db.selectUser(req.query.userid, (data) => {
+    db.selectUser(req.query.id || req.body.id, (data) => {
         users = data;
         next();
     });
+}
+
+function saveMessage(req, res, next) {
+    db.saveMessge(req.body.id, req.body.message, () => {
+        next();
+    })
 }
 
 
@@ -69,8 +75,8 @@ app.get('/game', (req, res) => {
    res.render('pathfinder');
 });
 
-app.get('/delete/:userid', (req, res) => {
-    db.deleteUser(req.params.userid, ()=> {
+app.get('/delete/:id', (req, res) => {
+    db.deleteUser(req.params.id, ()=> {
         res.redirect('/list');
     });
 });
@@ -79,3 +85,7 @@ app.get('/getUsers', loadUsers, (req, res) => {
     let temp = JSON.stringify(users);
     res.send(temp);
 });
+
+app.post('/saveMessage', selectUser, saveMessage, (req, res) => {
+    res.render('user', users);
+})

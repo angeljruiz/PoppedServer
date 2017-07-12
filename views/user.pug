@@ -8,19 +8,40 @@ html
         .container
             +header(username)
             +navvy(1)
+            form(action="/delete/" + id method='GET' id='delete')
+            form(action="saveMessage?" + id method='POST' id='save')
+                input(type='hidden' id='id' name='id' value=id)
 
-            input(type='button' class='btn btn-primary' value='Back' onclick='window.history.back();')
+            .row
+                //.form-group
+                div(class='col-md-1')
+                    input(type='button' class='btn btn-primary' value='Back' onclick='window.history.back();')
+                div(class='col-md-1')
 
-            +row(4, 1)
-                h2='Username '
-                    span(class='label label-primary')= username
 
-            +row(8, 1)
-                h2='Password '
-                    span(class='label label-warning')= password
-            br
-            +row(2, 1)
-                .form-group
-                    form(action="/delete/" + userid method='GET')
-                        input(type='submit' class='btn btn-danger' value='Delete')
+            .row
+                div(class='col-md-2')
+                div(class='col-md-4')
+                    h2='Username '
+                        span(class='label label-primary')= username
+                    h2='Password '
+                        span(class='label label-warning')= password
+
+                div(class='col-md-4')
+                    textarea(rows=5 cols=65 style='margin-top: 20px' form='save' id='message' name='message')
+            .row
+                div(class='col-md-1 col-md-offset-2')
+                    input(type='submit' class='btn btn-danger' value='Delete' form='delete')
+                div(class='col-md-1 col-md-offset-7')
+                    input(type='submit' class='btn btn-info' value='Submit' form='save')
+                br
+                br
+            +row(6, 6)
+                table(class='table')
+                    tbody
+                        tr
+                            td(class='text-center') eoifjew
+                        tr
+                            td(class='text-center') eoifjeweijoi
+
 
