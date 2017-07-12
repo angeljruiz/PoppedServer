@@ -14,12 +14,12 @@ app.set('views', './views');
 
 var dev = true;
 var users = [];
+var messages = [];
 
 function dlog(mesg) {
     if (dev)
         console.log(mesg);
 }
-
 function loadUsers(req, rez, next) {
     db.loadUsers( (data) => {
         users = data;
@@ -40,6 +40,12 @@ function selectUser(req, res, next) {
     });
 }
 
+function loadMessages(req, res, next) {
+    db.loadMessages(users.id, (data) => {
+        users.messages = data;
+        next();
+    });
+}
 function saveMessage(req, res, next) {
     db.saveMessge(req.body.id, req.body.message, () => {
         next();
@@ -67,7 +73,7 @@ app.get('/about', (req, res) => {
     res.render('about');
 });
 
-app.get('/user', selectUser, (req, res) => {
+app.get('/user', selectUser, loadMessages, (req, res) => {
     res.render('user', users);
 });
 
@@ -86,6 +92,6 @@ app.get('/getUsers', loadUsers, (req, res) => {
     res.send(temp);
 });
 
-app.post('/saveMessage', selectUser, saveMessage, (req, res) => {
+app.post('/saveMessage', selectUser, saveMessage, loadMessages, (req, res) => {
     res.render('user', users);
 })

@@ -15,6 +15,7 @@ module.exports.connect = function (callback) {
 class Database {
     constructor() {
         this.users = [];
+        this.messages = [];
     }
     loadUsers(fn) {
         this.users = [];
@@ -28,6 +29,7 @@ class Database {
     }
     selectUser(id, fn) {
         pool.query('SELECT * FROM users WHERE id = ($1)', [id], (err, rez) => {
+            // console.log(rez.rows);
             if(err)
                 return console.error('error running query', err);
             fn({ username: rez.rows[0].username, password: rez.rows[0].password, id: rez.rows[0].id });
@@ -54,13 +56,13 @@ class Database {
         });
     }
     loadMessages(oid, fn) {
-        let messages = []
-        pool.query('SELECT (id, message) FROM messages WHERE oid = ($1)', [oid], (err, res) => {
+        this.messages = [];
+        pool.query('SELECT * FROM messages WHERE oid = ($1) ORDER BY id DESC', [oid], (err, res) => {
             if(err)
                 return console.error('error running query', err);
             for(let i=0;i<res.rows.length;i++)
-                messages.push({ id: res.rows[i].id, message: res.rows[i].message });
-            fn(messages);
+                this.messages.push({ id: res.rows[i].id, messages: res.rows[i].message });
+            fn(this.messages);
         });
     }
     saveMessge(oid, message, fn) {

@@ -39,9 +39,8 @@ html
             +row(6, 6)
                 table(class='table')
                     tbody
-                        tr
-                            td(class='text-center') eoifjew
-                        tr
-                            td(class='text-center') eoifjeweijoi
+                        each message, index in messages
+                            tr
+                                td(class='text-center')= message.messages
 
 
