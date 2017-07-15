@@ -28,12 +28,22 @@ class Database {
         });
     }
     selectUser(id, fn) {
-        pool.query('SELECT * FROM users WHERE id = ($1)', [id], (err, rez) => {
-            // console.log(rez.rows);
-            if(err)
-                return console.error('error running query', err);
-            fn({ username: rez.rows[0].username, password: rez.rows[0].password, id: rez.rows[0].id });
-        });
+        let temp = (err, rez) => { 
+            if(err) {
+                fn(err, null);
+            }
+            if(rez.rows.length > 0)
+                fn(false, { username: rez.rows[0].username, password: rez.rows[0].password, id: rez.rows[0].id });
+            else
+                fn(false, null);
+        }
+        
+        if(!isNaN(id)) {
+            pool.query('SELECT * FROM users WHERE id = ($1)', [id], temp);
+        } else {
+            pool.query('SELECT * FROM users WHERE username = ($1)', [id], temp);
+        }
+        
     }
     deleteUser(id, fn) {
         pool.query('DELETE FROM users WHERE id = ($1)', [id], (err, res) => {

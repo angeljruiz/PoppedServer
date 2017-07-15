@@ -2,7 +2,7 @@ doctype html
 html
     head
         include ../includes/default_page.pug
-        +head('Login')
+        +head('Signup')
     body
         script.
                 function check() {
@@ -15,21 +15,17 @@ html
                     return true;
                 }
         form(action='/new' method='POST' id='signup')
-        form(action='/login' method='POST' id='login')
         .container
-            +header('Login')
+            +header('Signup')
             +navvy(0)
             .form-group
                 +row(4, 4)
-                    input.form-control(type='text' name='username' id='username' placeholder='Username' form='login')
+                    input.form-control(type='text' name='username' id='username' placeholder='Username' form='signup')
                     br
                 +row(4, 4)
-                    input.form-control(type='password' name='password' id='password' placeholder='Password' form='login')
+                    input.form-control(type='password' name='password' id='password' placeholder='Password' form='signup')
                     br
-                .row
-                    .col-md-2(class='col-md-offset-4')
-                        input.form-control(type='submit' onclick='return check();'  class='btn btn-primary' value='Login' form='login')
-                    .col-md-2
-                        a.form-control(class='btn btn-primary' href='/signup') Register
+                +row(2, 5)
+                    input.form-control(type='submit' onclick='return check();'  class='btn btn-primary' value='Register' form='signup')
 
 
