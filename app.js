@@ -8,6 +8,7 @@ var morgan = require('morgan');
 var db = require('./scripts/database.js');
 var User = require('./models/user.js');
 var app = express();
+var pgSession = require('connect-pg-simple')(session);
 
 require('./scripts/passport.js')(passport);
 
@@ -15,7 +16,15 @@ app.use(bp.urlencoded({extended: true}));
 app.use(bp.json());
 app.use(express.static(__dirname));
 app.use(morgan('dev'));
-app.use(session({ secret: 'MaMadassssKij2', resave: false, saveUninitialized: true}));
+app.use(session({
+  store: new pgSession({
+    pool : db.pool,                // Connection pool 
+  }),
+  secret: 'KijPimTw77',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } // 30 days 
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.set('view engine', 'pug');

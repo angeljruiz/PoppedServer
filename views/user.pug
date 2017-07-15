@@ -13,24 +13,23 @@ html
                 input(type='hidden' id='id' name='id' value=id)
 
             .row
-                //.form-group
                 div(class='col-md-1')
-                    a(class='btn btn-primary' href='/list') Back
+                    a(class='btn btn-primary form-control' href='/list') Back
+                div(class='col-md-1')
+                    a(class='btn btn-warning' href='/logout') Logout
+                div(class='col-md-1')
+                    input(type='submit' class='btn btn-danger' value='Delete' form='delete')
 
             .row
                 div(class='col-md-2')
                 div(class='col-md-4')
                     h2='Username '
                         span(class='label label-primary')= username
-                    h2='Password '
-                        span(class='label label-warning')= password
 
                 div(class='col-md-4')
                     textarea(rows=5 cols=65 style='margin-top: 20px' form='save' id='message' name='message')
             .row
-                div(class='col-md-1 col-md-offset-2')
-                    input(type='submit' class='btn btn-danger' value='Delete' form='delete')
-                div(class='col-md-1 col-md-offset-7')
+                div(class='col-md-1 col-md-offset-10')
                     input(type='submit' class='btn btn-info' value='Submit' form='save')
                 br
                 br
