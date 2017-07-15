@@ -3,17 +3,15 @@
  */
 
 var LocalStrategy = require('passport-local').Strategy;
-var Userc = require('../models/user.js');
-var User = new Userc;
+var User = require('../models/user.js');
 
 
 module.exports = function(passport) {
 
     passport.serializeUser(function(user, done) {
-        done(null, user);
+        done(null, user.localId);
     });
 
-    // used to deserialize the user
     passport.deserializeUser(function(id, done) {
         User.findOne(id, (err, user) => {
             done(err, user);
@@ -30,12 +28,12 @@ module.exports = function(passport) {
                 console.log(user);
                 return done(null, false);
             }
-            var newUser = new Userc;
+            var newUser = new User();
             newUser.localUsername = username;
             newUser.generateHash(password);
             newUser.save(() => {
                 console.log('user created');
-            })
+            });
         });
     }));
     passport.use('login', new LocalStrategy( { passReqToCallback: true }, (req, username, password, done) => {

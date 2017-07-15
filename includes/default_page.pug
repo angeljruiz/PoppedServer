@@ -18,6 +18,8 @@ mixin navvy(index)
         ul(class='nav nav-pills')
             each i in [0, 1, 2, 3]
                 li(class={active: index == i}): a(href=urls[i])= pages[i]
+            if(loggedIn)
+                li(class='pull-right'): a(href='/logout') Logout
 
 
 mixin row(size, offset)

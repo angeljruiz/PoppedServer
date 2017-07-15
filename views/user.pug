@@ -6,37 +6,31 @@ html
 
     body
         .container
-            +header(username)
+            +header(localUsername)
             +navvy(1)
-            form(action="/delete/" + id method='GET' id='delete')
-            form(action="saveMessage?" + id method='POST' id='save')
-                input(type='hidden' id='id' name='id' value=id)
+            form(action="/delete/" + localId method='GET' id='delete')
+            form(action="saveMessage?" + localId method='POST' id='save')
+                input(type='hidden' id='id' name='id' value=localId)
+
+            .btn-toolbar
+                a(class='btn btn-primary' href='/list') Back
+                input(type='submit' class='btn btn-danger' value='Delete' form='delete')
 
             .row
                 div(class='col-md-1')
-                    a(class='btn btn-primary form-control' href='/list') Back
-                div(class='col-md-1')
-                    a(class='btn btn-warning' href='/logout') Logout
-                div(class='col-md-1')
-                    input(type='submit' class='btn btn-danger' value='Delete' form='delete')
-
-            .row
-                div(class='col-md-2')
                 div(class='col-md-4')
                     h2='Username '
-                        span(class='label label-primary')= username
-
-                div(class='col-md-4')
-                    textarea(rows=5 cols=65 style='margin-top: 20px' form='save' id='message' name='message')
+                        span(class='label label-primary')= localUsername
+                
+                div(class='col-md-4 col-md-offset-1')
+                    textarea(rows=5 cols=65 style='margin-top: 20px; resize: none' form='save' id='message' name='message')
             .row
                 div(class='col-md-1 col-md-offset-10')
                     input(type='submit' class='btn btn-info' value='Submit' form='save')
                 br
                 br
             +row(6, 6)
-                table(class='table')
-                    tbody
-                        each message, index in messages
-                            tr
-                                td(class='text-center')= message.messages
+                ul(class='list-group')
+                    each message, index in messages
+                        li(class='list-group-item text-center')= message.messages
 

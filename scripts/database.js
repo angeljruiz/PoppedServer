@@ -36,7 +36,7 @@ class Database {
                 fn(false, { username: rez.rows[0].username, password: rez.rows[0].password, id: rez.rows[0].id });
             else
                 fn(false, null);
-        }
+        };
         
         if(!isNaN(id)) {
             pool.query('SELECT * FROM users WHERE id = ($1)', [id], temp);
@@ -54,15 +54,14 @@ class Database {
         });
     }
     createUser(username, password, fn) {
-        if(username  == '' || password == '') {
-            dlog('invalid pass or user');
+        if(username  === '' || password === '') {
             return res.send('bad username or pass');
         }
         pool.query('INSERT INTO users (username, password) VALUES ($1, $2)', [username, password], function(err) {
             if(err) {
                 return console.error('error running query', err);
             }
-            fn()
+            fn();
         });
     }
     loadMessages(oid, fn) {
@@ -75,7 +74,7 @@ class Database {
             fn(this.messages);
         });
     }
-    saveMessge(oid, message, fn) {
+    saveMessage(oid, message, fn) {
         pool.query('INSERT INTO messages (message, oid) VALUES ($1, $2)', [message, oid], (err, res) => {
             if(err)
                 return console.error('error running query', err);
@@ -84,6 +83,6 @@ class Database {
     }
 }
 
-module.exports = new Database;
+module.exports = new Database();
 module.exports.pool = pool;
 

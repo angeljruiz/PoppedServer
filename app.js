@@ -3,7 +3,7 @@
 var express = require('express');
 var session = require('express-session');
 var bp = require('body-parser');
-var passport = require('passport')
+var passport = require('passport');
 var morgan = require('morgan');
 var db = require('./scripts/database.js');
 var User = require('./models/user.js');
@@ -33,10 +33,7 @@ app.set('views', './views');
 
 var dev = true;
 var users = [];
-var messages = [];
-var test = User;
-//test.username = 'ji';
-//console.log(test.validPassword(0));
+
 
 function dlog(mesg) {
     if (dev)
@@ -49,27 +46,9 @@ function loadUsers(req, rez, next) {
     });
 }
 
-function createUser(req, res, next) {
-    db.createUser(req.body.username, req.body.password, () => {
-        next();
-    });
-}
-
-function selectUser(req, res, next) {
-    db.selectUser(req.query.id || req.body.id, (err, data) => {
-        users = data;
-        next();
-    });
-}
-
 function loadMessages(req, res, next) {
-    db.loadMessages(req.query.id || req.body.id, (data) => {
+    db.loadMessages(req.query.id || req.body.id || req.user.localId, (data) => {
         users.messages = data;
-        next();
-    });
-}
-function saveMessage(req, res, next) {
-    db.saveMessge(req.body.id, req.body.message, () => {
         next();
     });
 }
@@ -86,11 +65,20 @@ app.listen(80, () => {
     console.log('listening on 3000');
 });
 
-app.route('/').get((req, res) => {
-   res.render('login');
+app.get('/', (req, res) => {
+  if(req.isAuthenticated()) {
+    User.findOne(req.user.localId, (err, user) => {
+      user.loggedIn = true;
+      user.loadMessages( () => {
+        return res.render('user', user);
+      });
+    });
+  } else {
+    res.render('login');
+  }
 });
 
-app.route('/signup').get((req, res) => {
+app.get('/signup', (req, res) => {
    res.render('signup');
 });
 
@@ -104,19 +92,24 @@ app.get('/logout', (req, res) => {
 });
 
 app.get('/list', loadUsers, (req, res) => {
-    res.render('list', { users: users });
+    res.render('list', { users: users, loggedIn: req.isAuthenticated() });
 });
 
 app.get('/about', (req, res) => {
-    res.render('about');
+    res.render('about', { loggedIn: req.isAuthenticated() });
 });
 
-app.get('/user', isLoggedOn, selectUser, loadMessages, (req, res) => {
-    res.render('user', users);
+app.get('/user', isLoggedOn, (req, res) => {
+    User.findOne(req.query.id, (err, user) => {
+      user.loggedIn = req.isAuthenticated();
+      user.loadMessages( () => {
+        res.render('user', user);
+      });
+    });
 });
 
 app.get('/game', (req, res) => {
-   res.render('pathfinder');
+   res.render('pathfinder', { loggedIn: req.isAuthenticated() });
 });
 
 app.get('/delete/:id', (req, res) => {
@@ -134,6 +127,13 @@ app.get('/getMessages', loadMessages, (req, res) => {
     res.send(JSON.stringify(users.messages));
 });
 
-app.post('/saveMessage', selectUser, saveMessage, loadMessages, (req, res) => {
-    res.render('user', users);
-})
+app.post('/saveMessage', (req, res) => {
+    if(req.isAuthenticated()) {
+      req.user.loggedIn = true;
+      req.user.saveMessage(req.body.message, () => {
+        req.user.loadMessages( () => {
+          res.render('user', req.user);
+        });
+      });
+    }
+});
