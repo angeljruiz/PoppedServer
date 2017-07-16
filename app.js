@@ -69,6 +69,7 @@ app.get('/', (req, res) => {
   if(req.isAuthenticated()) {
     User.findOne(req.user.localId, (err, user) => {
       user.loggedIn = true;
+      user.owner = true;
       user.loadMessages( () => {
         return res.render('user', user);
       });
@@ -82,7 +83,9 @@ app.get('/signup', (req, res) => {
    res.render('signup');
 });
 
-app.post('/login', passport.authenticate('login', { session: true, successRedirect : '/list', failureRedirect : '/' }));
+app.post('/login', passport.authenticate('login', { session: true, successRedirect : '/', failureRedirect : '/' }), (req, res) => {
+  res.redirect('/');
+});
 
 app.post('/new', passport.authenticate('signup', { session: true, successRedirect:  '/list', failureRedirect: '/signup' }));
 
@@ -101,6 +104,8 @@ app.get('/about', (req, res) => {
 
 app.get('/user', isLoggedOn, (req, res) => {
     User.findOne(req.query.id, (err, user) => {
+      if(req.query.id == req.user.localId)
+        user.owner = true;
       user.loggedIn = req.isAuthenticated();
       user.loadMessages( () => {
         res.render('user', user);
@@ -130,6 +135,7 @@ app.get('/getMessages', loadMessages, (req, res) => {
 app.post('/saveMessage', (req, res) => {
     if(req.isAuthenticated()) {
       req.user.loggedIn = true;
+      req.user.owner = true;
       req.user.saveMessage(req.body.message, () => {
         req.user.loadMessages( () => {
           res.render('user', req.user);

@@ -24,8 +24,7 @@ module.exports = function(passport) {
                 console.log('error');
                 return done(err);
             }
-            if(user.localId != -1){
-                console.log(user);
+            if(!user){
                 return done(null, false);
             }
             var newUser = new User();
@@ -38,6 +37,10 @@ module.exports = function(passport) {
     }));
     passport.use('login', new LocalStrategy( { passReqToCallback: true }, (req, username, password, done) => {
         User.findOne(username, (err, user) => {
+            if(err)
+                return done(err);
+            if(!user)
+                return done(null, false);
             if(!user.validPassword(password)) {
                 return done(null, false);
             }

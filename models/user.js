@@ -11,12 +11,15 @@ class User {
     static findOne(id, fn) {
         db.selectUser(id, (error, data) => {
             let user = new User();
+            if(error)
+                return fn(error);
             if(data) {
                 user.localUsername = data.username;
                 user.localPassword = data.password;
                 user.localId = data.id;
+                return fn(false, user);
             }
-            fn(error, user);
+            fn(false, false);
         });
     }
     loadMessages(fn) {

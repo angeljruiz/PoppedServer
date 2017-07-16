@@ -23,10 +23,12 @@ html
                         span(class='label label-primary')= localUsername
                 
                 div(class='col-md-4 col-md-offset-1')
-                    textarea(rows=5 cols=65 style='margin-top: 20px; resize: none' form='save' id='message' name='message')
+                    if(owner)
+                        textarea(rows=5 cols=65 style='margin-top: 20px; resize: none' form='save' id='message' name='message')
             .row
                 div(class='col-md-1 col-md-offset-10')
-                    input(type='submit' class='btn btn-info' value='Submit' form='save')
+                    if(owner)
+                        input(type='submit' class='btn btn-info' value='Submit' form='save')
                 br
                 br
             +row(6, 6)

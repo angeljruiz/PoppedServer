@@ -28,14 +28,14 @@ class Database {
         });
     }
     selectUser(id, fn) {
-        let temp = (err, rez) => { 
+        let temp = (err, res) => { 
             if(err) {
-                fn(err, null);
+                return fn(err);
             }
-            if(rez.rows.length > 0)
-                fn(false, { username: rez.rows[0].username, password: rez.rows[0].password, id: rez.rows[0].id });
+            if(res.rows.length > 0)
+                return fn(false, { username: res.rows[0].username, password: res.rows[0].password, id: res.rows[0].id });
             else
-                fn(false, null);
+                return fn(false, false);
         };
         
         if(!isNaN(id)) {
