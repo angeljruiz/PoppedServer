@@ -13,18 +13,18 @@ module.exports = function(passport) {
     });
 
     passport.deserializeUser(function(id, done) {
-        User.findOne(id, (err, user) => {
+        User.findOne(id, false, (err, user) => {
             done(err, user);
         });
     });
     
     passport.use('signup', new LocalStrategy( { passReqToCallback: true }, (req, username, password, done) => {
-        User.findOne(username, (err, user) => {
+        User.findOne(username, false, (err, user) => {
             if(err) {
                 console.log('error');
                 return done(err);
             }
-            if(!user){
+            if(user){
                 return done(null, false);
             }
             var newUser = new User();
@@ -36,7 +36,7 @@ module.exports = function(passport) {
         });
     }));
     passport.use('login', new LocalStrategy( { passReqToCallback: true }, (req, username, password, done) => {
-        User.findOne(username, (err, user) => {
+        User.findOne(username, false, (err, user) => {
             if(err)
                 return done(err);
             if(!user)
@@ -48,5 +48,4 @@ module.exports = function(passport) {
         });
 
     }));
-
 };

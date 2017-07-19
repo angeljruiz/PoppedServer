@@ -1,0 +1,36 @@
+//
+   Created by angel on 6/17/17.
+
+doctype html
+html
+    head
+         include ../includes/default_page.pug
+         +head('Layout')
+      
+    body
+        #testr
+            a(v-on:click="clickr" style='width: 5px; height: 620px; background-color: #2c86d3; position: absolute; cursor: col-resize; top: 200px; left: 345px')
+            .fluid-container
+                +header('Layout')
+                +navvy(2)
+                
+                label hi
+                iframe(src='/iframe' style='position: absolute; left: 350px')
+                      
+                   
+                br
+                br
+                br
+    script.
+        var app = new Vue({
+            el: '#testr',
+            data: {
+               
+            }
+            methods: {
+                clickr: () => {
+                      
+                     console.log('hihi');
+                }
+            }
+        })

@@ -4,10 +4,11 @@ html
         include ../includes/default_page.pug
         +head('Profile')
 
-    body
+    body(style='background-color: gray')
         .container
             +header(localUsername)
-            +navvy(1)
+            - var index = owner ? 0 : 1
+            +navvy(index)
             form(action="/delete/" + localId method='GET' id='delete')
             form(action="saveMessage?" + localId method='POST' id='save')
                 input(type='hidden' id='id' name='id' value=localId)
@@ -15,23 +16,24 @@ html
             .btn-toolbar
                 a(class='btn btn-primary' href='/list') Back
                 input(type='submit' class='btn btn-danger' value='Delete' form='delete')
-
+            br
             .row
-                div(class='col-md-1')
-                div(class='col-md-4')
+                div(class='col-md-1 col-md-offset-1')
+                    img(src='/photo/' + localId)
+                div(class='col-md-3 col-md-offset-0')
                     h2='Username '
                         span(class='label label-primary')= localUsername
                 
-                div(class='col-md-4 col-md-offset-1')
+                div(class='col-md-4 col-md-offset-0')
                     if(owner)
                         textarea(rows=5 cols=65 style='margin-top: 20px; resize: none' form='save' id='message' name='message')
             .row
-                div(class='col-md-1 col-md-offset-10')
+                div(class='col-md-1 col-md-offset-9')
                     if(owner)
                         input(type='submit' class='btn btn-info' value='Submit' form='save')
                 br
                 br
-            +row(6, 6)
+            +row(6, 5)
                 ul(class='list-group')
                     each message, index in messages
                         li(class='list-group-item text-center')= message.messages

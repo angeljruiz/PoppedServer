@@ -2,6 +2,7 @@
 
 var express = require('express');
 var session = require('express-session');
+var sharp = require('sharp');
 var bp = require('body-parser');
 var passport = require('passport');
 var morgan = require('morgan');
@@ -29,11 +30,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.set('view engine', 'pug');
 app.set('views', './views');
-//app.locals.pretty = true;
+app.locals.pretty = true;
 
 var dev = true;
 var users = [];
-
 
 function dlog(mesg) {
     if (dev)
@@ -67,12 +67,10 @@ app.listen(80, () => {
 
 app.get('/', (req, res) => {
   if(req.isAuthenticated()) {
-    User.findOne(req.user.localId, (err, user) => {
+    User.findOne(req.user.localId, true, (err, user) => {
       user.loggedIn = true;
       user.owner = true;
-      user.loadMessages( () => {
-        return res.render('user', user);
-      });
+      res.render('user', user);
     });
   } else {
     res.render('login');
@@ -103,15 +101,23 @@ app.get('/about', (req, res) => {
 });
 
 app.get('/user', isLoggedOn, (req, res) => {
-    User.findOne(req.query.id, (err, user) => {
+    User.findOne(req.query.id, true, (err, user) => {
+      if(err)
+        return console.log(err);
       if(req.query.id == req.user.localId)
         user.owner = true;
       user.loggedIn = req.isAuthenticated();
-      user.loadMessages( () => {
-        res.render('user', user);
-      });
+      res.render('user', user);
     });
 });
+
+app.get('/photo/:id', isLoggedOn, (req, res) => {
+  User.findOne(req.query.id, false, (err, user) => {
+    if(!User.profilePicture) {
+      res.sendFile(__dirname + '/media/df.png');
+    }
+  })
+})
 
 app.get('/game', (req, res) => {
    res.render('pathfinder', { loggedIn: req.isAuthenticated() });
@@ -121,6 +127,10 @@ app.get('/delete/:id', (req, res) => {
     db.deleteUser(req.params.id, ()=> {
         res.redirect('/list');
     });
+});
+
+app.get('/iframe', (req, res) => {
+  res.render('preview');
 });
 
 app.get('/getUsers', loadUsers, (req, res) => {

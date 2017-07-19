@@ -5,15 +5,15 @@ html
         +head('Signup')
     body
         script.
-                function check() {
-                    var user = $("#username").val();
-                    var pass = $("#password").val();
-                    if (user == '' || pass == '') {
-                        alert("Username or password invalid");
-                        return false;
-                    }
-                    return true;
+            function check() {
+                var user = $("#username").val();
+                var pass = $("#password").val();
+                if (user == '' || pass == '') {
+                    alert("Username or password invalid");
+                    return false;
                 }
+                return true;
+            }
         form(action='/new' method='POST' id='signup')
         .container
             +header('Signup')

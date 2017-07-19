@@ -1,3 +1,4 @@
+var fs = require('fs');
 var bcrypt = require('bcrypt-nodejs');
 var db = require('../scripts/database.js');
 
@@ -6,9 +7,10 @@ class User {
         this.localUsername = 0;
         this.localPassword = 0;
         this.localId = -1;
+        this.profilePicture = 0;
         this.messages = [];
     }
-    static findOne(id, fn) {
+    static findOne(id, messages, fn) {
         db.selectUser(id, (error, data) => {
             let user = new User();
             if(error)
@@ -17,15 +19,37 @@ class User {
                 user.localUsername = data.username;
                 user.localPassword = data.password;
                 user.localId = data.id;
-                return fn(false, user);
+                if(data.pp) {
+                    user.profilePicture = data.pp;
+                } else {
+                    user.loadPicture('./media/df.png', () => {
+                        if(messages)
+                            user.loadMessages( () => {
+                                return fn(false, user);
+                            });
+                        else
+                            return fn(false, user);
+                    });
+                }
+            } else {
+                return fn(false, false);
             }
-            fn(false, false);
+        });
+    }
+    loadPicture(pic, fn) {
+        fs.readFile(pic, (err, data) => {
+            if(err)
+                return fn(err);
+            this.profilePicture = data;
+            if(fn)
+                fn();
         });
     }
     loadMessages(fn) {
         db.loadMessages(this.localId, (data) => {
             this.messages = data;
-            fn(); 
+            if(fn)
+                return fn(); 
         });
     }
     saveMessage(message, fn) {

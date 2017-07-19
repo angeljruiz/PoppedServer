@@ -33,7 +33,7 @@ class Database {
                 return fn(err);
             }
             if(res.rows.length > 0)
-                return fn(false, { username: res.rows[0].username, password: res.rows[0].password, id: res.rows[0].id });
+                return fn(false, { username: res.rows[0].username, password: res.rows[0].password, id: res.rows[0].id, pp: res.rows[0].pp });
             else
                 return fn(false, false);
         };
@@ -48,9 +48,9 @@ class Database {
     deleteUser(id, fn) {
         pool.query('DELETE FROM users WHERE id = ($1)', [id], (err, res) => {
             if(err)
-                fn(false);
+                return fn(err);
 
-            fn(true);
+            return fn(true);
         });
     }
     createUser(username, password, fn) {
@@ -71,7 +71,7 @@ class Database {
                 return console.error('error running query', err);
             for(let i=0;i<res.rows.length;i++)
                 this.messages.push({ id: res.rows[i].id, messages: res.rows[i].message });
-            fn(this.messages);
+            return fn(this.messages);
         });
     }
     saveMessage(oid, message, fn) {
