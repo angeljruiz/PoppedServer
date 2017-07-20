@@ -1,13 +1,15 @@
 "use strict";
 
-var board = new Board(25, 20);
+var board = new Board(7, 7);
 var cntTile = [];
+var pf = new Pathfinder(board);
+//pf.updateValues();
 
 var cbID = 0;
 
 function translatePos(event) {
     let rect = event.target.getBoundingClientRect();
-    return board.getPos(event.clientX-rect.left, event.clientY-rect.top)
+    return Board.getPos(event.clientX-rect.left, event.clientY-rect.top);
 }
 function updateTile(pos) {
     cntTile = pos;
@@ -23,7 +25,7 @@ function drawTile() {
     switch (board.getType(cntTile)) {
         case 1:
             ctx.fillStyle='#2c86d3';
-            ctx.fillRect(cntTile[0]*32, cntTile[1]*32, 32, 32);
+            ctx.fillRect(cntTile[0]*114, cntTile[1]*91, 114, 91);
             break;
         default:
             console.log('hi');
