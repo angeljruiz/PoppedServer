@@ -19,12 +19,13 @@ app.use(express.static(__dirname));
 app.use(morgan('dev'));
 app.use(session({
   store: new pgSession({
-    pool : db.pool,                // Connection pool 
+    pool : db.pool,                // Connection pool
   }),
   secret: 'KijPimTw77',
+  name: 'PoppedCookies',
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } // 30 days 
+  cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } // 30 days
 }));
 app.use(passport.initialize());
 app.use(passport.session());

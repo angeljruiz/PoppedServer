@@ -11,13 +11,18 @@ html
         script(src='js/board.js')
         script(src='js/game.js')
         .container
-            +header('Tiles')
+            +header('Path finder')
             +navvy(2)
 
             +row(2, 6)
                 i(class='fa f a-play fa-2x')
             br
-            +row(10, 2)
+            .row
+              .col-md-1
+                input.btn.btn-info.form-control(type='button' value='Run' onClick='pf.addToOpen()')
+              .col-md-1
+                input.btn.btn-info.form-control(type='button' value='Reset' onClick='pf.reset()')
+              .col-md-10
                 canvas(id='canvy' width=800 height=640 style="border:1px solid #000000; position:relative; top:0px; left:-15px")
 
             br

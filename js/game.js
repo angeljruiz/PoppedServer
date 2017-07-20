@@ -1,9 +1,6 @@
 "use strict";
 
-var board = new Board(7, 7);
-var cntTile = [];
-var pf = new Pathfinder(board);
-//pf.updateValues();
+var pf = 0;
 
 var cbID = 0;
 
@@ -11,35 +8,47 @@ function translatePos(event) {
     let rect = event.target.getBoundingClientRect();
     return Board.getPos(event.clientX-rect.left, event.clientY-rect.top);
 }
-function updateTile(pos) {
-    cntTile = pos;
-}
 
 function dragging(event) {
     console.log(event);
 }
 
-function drawTile() {
-    var canvas = $('#canvy').get(0);
-    var ctx = canvas.getContext('2d');
-    switch (board.getType(cntTile)) {
-        case 1:
-            ctx.fillStyle='#2c86d3';
-            ctx.fillRect(cntTile[0]*114, cntTile[1]*91, 114, 91);
-            break;
-        default:
-            console.log('hi');
-            break;
-    }
-
-}
-
 $(document).ready(() => {
     var $canvas = $('#canvy');
+    var board = new Board(25, 20, (pos) => {
+        var canvas = document.getElementById('canvy');
+        var ctx = canvas.getContext('2d');
+        switch (pos.type) {
+            case 1:
+                ctx.fillStyle='blue';
+                break;
+            case 2:
+                ctx.fillStyle='white';
+                break;
+            case 3:
+                ctx.fillStyle='red';
+                break;
+            case 4:
+                ctx.fillStyle='green';
+                break;
+            default:
+                ctx.fillStyle='gray';
+                break;
+        }
+        ctx.fillRect(pos.x*32, pos.y*32, 32, 32);
+        ctx.fillStyle='gray';
+        if(pos.parent) {
+          ctx.fillStyle='black';
+          ctx.beginPath();
+          ctx.moveTo(pos.x*32+16, pos.y*32+16);
+          ctx.lineTo(pos.parent.x*32+16, pos.parent.y*32+16);
+          ctx.stroke();
+        }
+    });
+    pf = new Pathfinder(board, [1,1], [24,19]);
     $canvas.click( (event) => {
-        updateTile(translatePos(event));
-        board.setType(cntTile);
-        drawTile(cntTile);
+        board.setType(translatePos(event));
+        board.draw(board.getTile(translatePos(event)));
     });
 
     $canvas.mousedown( ()=> {
