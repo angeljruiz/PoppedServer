@@ -1,5 +1,5 @@
 .jumbotron h1 {
-    color: #235277;
+    color: white;
 }
 .container .jumbotron {
     padding-top: 15px;
@@ -12,18 +12,18 @@
 }
 
 .navbar {
-    background-color: #939393;
-    border-bottom-color: #939393;
-    border-left-color: #939393;
-    border-right-color: #939393;
-    border-top-color: #939393;
+    /*background-color: #181818;*/
+    /*border-bottom-color: #939393;*/
+    /*border-left-color: #939393;*/
+    /*border-right-color: #939393;*/
+    /*border-top-color: #939393;*/
 
 }
 
 .nav>li>a {
     padding: 15px 25px;
-    color: black;
-}
+/*    color: black;
+*/}
 
 .fa-play {
     position: relative;
