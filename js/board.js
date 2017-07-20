@@ -19,7 +19,7 @@ class Board {
         for(let i=0;i<width;i++) {
             this.tiles[i] = [];
             for(let j=0;j<height;j++)
-                this.tiles[i][j] = new tile;
+                this.tiles[i][j] = new tile();
         }
 
     }

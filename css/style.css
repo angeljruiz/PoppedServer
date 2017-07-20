@@ -1,13 +1,14 @@
 .jumbotron h1 {
     color: #235277;
 }
-.jumbotron {
+.container .jumbotron {
     padding-top: 15px;
     padding-bottom: 1px;
     margin-top: 30px;
     margin-bottom: 0px;
     background-color: #f8f8f8;
     background-color: #337ab7;
+    border-radius: 0px;
 }
 
 .navbar {
@@ -21,6 +22,7 @@
 
 .nav>li>a {
     padding: 15px 25px;
+    color: black;
 }
 
 .fa-play {
@@ -33,4 +35,107 @@
     width: 100%;
     height: 100%;
     z-index: -1;
+}
+
+.panel.login-panel {
+    position: relative;
+    width: 50%;
+    left: 25%;
+}
+
+.panel.user-panel {
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.panel.messages-panel {
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.submit-messages {
+    position: relative;
+    top: 20px;
+    margin-top: 20px;
+}
+
+.gitcon {
+    position: fixed;
+    bottom: 0;
+    left: 10px;
+}
+.linkcon {
+    position: fixed;
+    bottom: 0;
+    left: 55px;
+}
+
+.indent {
+    text-indent: 4rem;
+}
+.bottom-10 {
+    position: relative;
+    bottom: 10px;
+}
+.top-10 {
+    position: relative;
+    top: 10px;
+}
+
+.top-20 {
+    position: relative;
+    top: 20px;
+}
+
+.left-10 {
+    position: relative;
+    left: 10px;
+}
+
+.left-20 {
+    position: relative;
+    left: 20px;
+}
+
+.left-25 {
+    position: relative;
+    left: 25px;
+}
+
+.left-30 {
+    position: relative;
+    left: 30px;
+}
+.left-35 {
+    position: relative;
+    left: 37px;
+}
+
+.left-40 {
+    position: relative;
+    left: 40px;
+}
+
+.margin-bottom-20 {
+    margin-bottom: 20px;
+}
+
+.margin-left-15 {
+    margin-left: 5em;
+}
+
+.margin-top-20 {
+    margin-top: 20px;
+}
+
+.padding-bottom-10 {
+    padding-bottom: 10px;
+}
+
+.padding-left-15 {
+    padding-left: 15px;
+}
+
+.padding-top-20 {
+    padding-top: 10px;
 }

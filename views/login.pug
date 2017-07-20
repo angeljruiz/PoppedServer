@@ -24,18 +24,20 @@ html
         .container
             +header('Login')
             +navvy(0)
-            .form-group(style='position: relative')
-                +row(4, 4)
-                    input.form-control(type='text' name='username' id='username' placeholder='Username' form='login')
+            .panel.panel-default.login-panel
+                .panel-body
                     br
-                +row(4, 4)
-                    input.form-control(type='password' name='password' id='password' placeholder='Password' form='login')
+                    +row(6, 3)
+                        input.form-control(type='text' name='username' id='username' placeholder='Username' form='login')
+                        br
+                    +row(6, 3)
+                        input.form-control(type='password' name='password' id='password' placeholder='Password' form='login')
+                        br
+                    .row
+                        .col-md-4(class='col-md-offset-2')
+                            input.form-control(type='submit' onclick='return check();'  class='btn btn-primary' value='Login' form='login')
+                        .col-md-4
+                            a.form-control(class='btn btn-primary' href='/signup') Register
                     br
-                .row
-                    .col-md-2(class='col-md-offset-4')
-                        input.form-control(type='submit' onclick='return check();'  class='btn btn-primary' value='Login' form='login')
-                    .col-md-2
-                        a.form-control(class='btn btn-primary' href='/signup') Register
-
-
-
+    
+    

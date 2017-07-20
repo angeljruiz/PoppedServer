@@ -10,6 +10,7 @@ mixin head(title)
 mixin header(title)
     .jumbotron.text-center
         h1= title
+    +icons
 
 mixin navvy(index)
     -
@@ -22,7 +23,11 @@ mixin navvy(index)
             if(loggedIn)
                 li(class='pull-right'): a(href='/logout') Logout
 
-
+mixin icons
+    a(href= 'https://github.com/angeljruiz')
+        i.fa-3x.fa.fa-github.gitcon
+    a(href='https://google.com')
+        i.fa-3x.fa.fa-linkedin.linkcon
 mixin row(size, offset)
     .row
         div(class='col-md-' + size class=offset==0? '' : 'col-md-offset-' + offset)

@@ -13,28 +13,32 @@ html
             form(action="saveMessage?" + localId method='POST' id='save')
                 input(type='hidden' id='id' name='id' value=localId)
 
-            .btn-toolbar
-                a(class='btn btn-primary' href='/list') Back
-                input(type='submit' class='btn btn-danger' value='Delete' form='delete')
-            br
             .row
-                div(class='col-md-1 col-md-offset-1')
-                    img(src='/photo/' + localId)
-                div(class='col-md-3 col-md-offset-0')
-                    h2='Username '
-                        span(class='label label-primary')= localUsername
+                .col-md-6
+                    .panel.panel-default.user-panel
+                        br
+                        .btn-toolbar.left-10
+                            a(class='btn btn-primary' href='/list') Back
+                            input(type='submit' class='btn btn-danger' value='Delete' form='delete')
+                        br
+                        .row
+                            div(class='col-md-1 col-md-offset-3')
+                                img(src='/photo/' + localId)
+                            div(class='col-md-8 left-10 bottom-10')
+                                h2='Username '
+                                    span(class='label label-primary left-10')= localUsername
+                .col-md-6
+                    if(owner || messages.length > 0)
+                        .panel.panel-default.messages-panel
+                            .row
+                                .col-md-12
+                                    textarea.left-35(rows=5 cols=65 style='margin-top: 20px; resize: none' form='save' name='message')
+                                .col-md-12.col-md-offset-9
+                                    if(owner)
+                                        input.margin-bottom-20.top-10(type='submit' class='btn btn-info' value='Submit' form='save')
+                                br
+                                br
+                            ul(class='list-group')
+                                each message in messages
+                                    li(class='list-group-item text-center')= message.messages
                 
-                div(class='col-md-4 col-md-offset-0')
-                    if(owner)
-                        textarea(rows=5 cols=65 style='margin-top: 20px; resize: none' form='save' id='message' name='message')
-            .row
-                div(class='col-md-1 col-md-offset-9')
-                    if(owner)
-                        input(type='submit' class='btn btn-info' value='Submit' form='save')
-                br
-                br
-            +row(6, 5)
-                ul(class='list-group')
-                    each message, index in messages
-                        li(class='list-group-item text-center')= message.messages
-
