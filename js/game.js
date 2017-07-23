@@ -31,6 +31,9 @@ $(document).ready(() => {
             case 4:
                 ctx.fillStyle='green';
                 break;
+            case 5:
+                ctx.fillStyle='yellow';
+                break;
             default:
                 ctx.fillStyle='gray';
                 break;

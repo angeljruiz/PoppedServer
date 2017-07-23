@@ -40,7 +40,7 @@ class Pathfinder {
       this.board.updated.push(this.end);
       if (all)
         this.board.reset();
-      this.start.type = 1;
+      this.start.type = 5;
       this.end.type = 3;
       this.board.update();
     }
@@ -104,10 +104,8 @@ class Pathfinder {
                 this.opened.push(tile);
                 this.board.updated.push(tile);
                 tile.type = 2;
-              } else if (tile.g < this.current.g) {
+              } else if (tile.g < this.current.g)
                   tile.parent = this.current;
-                }
-              }
             }
           }
         }
