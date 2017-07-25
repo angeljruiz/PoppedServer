@@ -1,11 +1,13 @@
 mixin head(title)
     title= title
+    meta(charset="utf-8")
     meta(name='viewport' content='width=device-width, initial-scale=1')
     link(href='css/bootstrap.min.css' rel='stylesheet')
     link(href='css/font-awesome.min.css' rel='stylesheet')
     link(href='css/style.css' rel='stylesheet')
     script(src='/js/jq.js')
     script(src='https://unpkg.com/vue@2.4.1')
+    link(rel="icon" href="media/icon.ico")
 
 mixin header(title)
     .jumbotron.text-center
@@ -22,6 +24,23 @@ mixin navvy(index)
                 li(class={active: index == i}): a(href=urls[i])= pages[i]
             if(loggedIn)
                 li(class='pull-right'): a(href='/logout') Logout
+mixin initFb()
+  script.
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '124609491488258',
+        xfbml      : true,
+        version    : 'v2.10'
+      });
+      FB.AppEvents.logPageView();
+    };
+
+    var js, fjs = document.getElementsByTagName('script')[0];
+    if (!document.getElementById('facebook-jssdk')) {
+      js = document.createElement('script'); js.id = 'facebook-jssdk';
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10&appId=124609491488258";
+      fjs.parentNode.insertBefore(js, fjs);
+    }
 
 mixin icons
     a(href= 'https://github.com/ahdelgado')

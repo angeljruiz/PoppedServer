@@ -2,7 +2,7 @@
  * Created by angel on 7/13/17.
  */
 
-var LocalStrategy = require('passport-local').Strategy;
+var LocalStrategy = require('passport-local').Strategy, FacebookStrategy = require('passport-facebook').Strategy;
 var User = require('../models/user.js');
 
 
@@ -17,7 +17,7 @@ module.exports = function(passport) {
             done(err, user);
         });
     });
-    
+
     passport.use('signup', new LocalStrategy( { passReqToCallback: true }, (req, username, password, done) => {
         User.findOne(username, false, (err, user) => {
             if(err) {
@@ -48,4 +48,16 @@ module.exports = function(passport) {
         });
 
     }));
+    passport.use(new FacebookStrategy({
+      clientID: 24609491488258,
+      clientSecret: '9b7058872c03ea29ce1009f12738b6f8',
+      callbackURL: "http://107.194.225.131/auth/facebook/return"
+    },
+    function(accessToken, refreshToken, profile, done) {
+      User.findOne(profile, false, function(err, user) {
+        if (err) { return done(err); }
+        done(null, user);
+      });
+    }
+));
 };

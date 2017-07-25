@@ -48,7 +48,7 @@ $(document).ready(() => {
           ctx.stroke();
         }
     });
-    pf = new Pathfinder(board, [1,1], [24,19]);
+    pf = new Pathfinder(board, [0,0], [24,19]);
     $canvas.click( (event) => {
         board.setType(translatePos(event));
         board.draw(board.getTile(translatePos(event)));

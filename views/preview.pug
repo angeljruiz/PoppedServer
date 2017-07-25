@@ -3,4 +3,21 @@ doctype html
 html
     head
     body(style='background-color: gray')
-        label hi
+      script(src='https://unpkg.com/vue@2.4.1')
+      script(src="//cdnjs.cloudflare.com/ajax/libs/Sortable/1.6.0/Sortable.min.js")
+      script(scr='http://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.14.1/vuedraggable.min.js')
+      script(src='../js/preview.js')
+      link(href='css/style.css' rel='stylesheet')
+
+      #main
+        h1 Vue Dragable For
+        .drag
+          h2 Draggable
+          draggable.dragArea(:list='list')
+            div(v-for='element in list') {{element.name}}
+        .normal
+          h2 Normal v-for
+          .dragArea
+            div(v-for='element in list') {{element.name}}
+        button(@click='add') Add
+        button(@click='replace') Replace

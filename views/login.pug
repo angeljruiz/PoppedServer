@@ -6,18 +6,21 @@ html
         +head('Login')
     body(style='background-color: gray')
         script.
-            particlesJS.load('particles', 'media/particles.json', function() {
-                console.log('callback - particles.js config loaded');
-            });
-            function check() {
-                var user = $("#username").val();
-                var pass = $("#password").val();
-                if (user == '' || pass == '') {
-                    alert("Username or password invalid");
-                    return false;
-                }
-                return true;
+          particlesJS.load('particles', 'media/particles.json', function() {
+            console.log('callback - particles.js config loaded');
+          });
+          function check() {
+            var user = $("#username").val();
+            var pass = $("#password").val();
+            if (user == '' || pass == '') {
+              alert("Username or password invalid");
+              return false;
             }
+            return true;
+          }
+        +initFb()
+        //.fb-like(data-share="true" data-width="450" data-show-faces="true" style='position: fixed; bottom: 0; left: 77%')
+        #fb-root
         form(action='/new' method='POST' id='signup')
         form(action='/login' method='POST' id='login')
         div(id='particles')
@@ -36,8 +39,11 @@ html
                     .row
                         .col-md-4(class='col-md-offset-2')
                             input.form-control(type='submit' onclick='return check();'  class='btn btn-primary' value='Login' form='login')
+                            //a(href='/auth/facebook') Login with Facebook
                         .col-md-4
                             a.form-control(class='btn btn-primary' href='/signup') Register
+                    .row
+                      .col-md-4.col-md-offset-3
+                        .fb-login-button(data-max-rows="1" data-size="medium" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="true")
+
                     br
-    
-    

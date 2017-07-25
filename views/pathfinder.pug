@@ -18,12 +18,23 @@ html
                 i(class='fa f a-play fa-2x')
             br
             .row
-              .col-md-1
-                input.btn.btn-info.form-control(type='button' value='Run' onClick='pf.addToOpen()')
-              .col-md-1
-                input.btn.btn-info.form-control(type='button' value='Reset' onClick='pf.reset()')
+              .col-md-2
+                .panel.panel-default
+                  .panel-body
+                    .row
+                      .col-md-6
+                        input.btn.btn-info(type='button' value='Run' onClick='pf.findPath()')
+                      .col-md-6
+                        input.btn.btn-info.right-10(type='button' value='Reset' onClick='pf.reset(true, false)')
+                      .col-md-6
+                        input.btn.btn-info.margin-top-20(type='button' value='Step' onClick='pf.addToOpen()')
+                      .col-md-6
+                        input.btn.btn-info.margin-top-20.right-10(type='button' value='Clear' onClick='pf.reset(true, true)')
+
+
               .col-md-10
                 canvas(id='canvy' width=800 height=640 style="border:1px solid #000000; position:relative; top:0px; left:-15px")
+
 
             br
             br

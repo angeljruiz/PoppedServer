@@ -30,7 +30,14 @@ class Pathfinder {
       }
     }
 
-    reset(all = true) {
+    findPath() {
+      let i = 0;
+      while (!this.addToOpen() && i <= 300) {
+        i++;
+      }
+    }
+
+    reset(all = true, walls = false) {
       this.opened = [];
       this.closed = [];
       this.path = [];
@@ -39,7 +46,7 @@ class Pathfinder {
       this.board.updated.push(this.current);
       this.board.updated.push(this.end);
       if (all)
-        this.board.reset();
+        this.board.reset(walls);
       this.start.type = 5;
       this.end.type = 3;
       this.board.update();
@@ -112,6 +119,7 @@ class Pathfinder {
       }
       this.updateValues();
       this.board.update();
+      return false;
     }
 
 }

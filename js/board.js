@@ -36,10 +36,14 @@ class Board {
         return[Math.floor(x/32),Math.floor(y/32)];
     }
 
-    reset() {
+    reset(walls) {
       for (let i = 0; i < this.width; i++) {
         for (let j = 0; j < this.height; j++) {
-          this.tiles[i][j].type = 0;
+          if(this.tiles[i][j].type == 1 && !walls) {
+            continue
+          } else {
+            this.tiles[i][j].type = 0;
+          }
           this.tiles[i][j].d = 0;
           this.tiles[i][j].h = 0;
           this.tiles[i][j].t = 0;

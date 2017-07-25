@@ -8,6 +8,7 @@ var passport = require('passport');
 var morgan = require('morgan');
 var db = require('./scripts/database.js');
 var User = require('./models/user.js');
+var fb = require('./scripts/facebook.js');
 var app = express();
 var pgSession = require('connect-pg-simple')(session);
 
@@ -63,8 +64,18 @@ function isLoggedOn(req, res, next) {
 
 
 app.listen(80, () => {
-    console.log('listening on 3000');
+    console.log('listening on 80');
 });
+
+app.get('/auth/facebook', passport.authenticate('facebook'));
+
+// Facebook will redirect the user to this URL after approval.  Finish the
+// authentication process by attempting to obtain an access token.  If
+// access was granted, the user will be logged in.  Otherwise,
+// authentication has failed.
+app.get('/auth/facebook/return',
+  passport.authenticate('facebook', { successRedirect: '/',
+                                      failureRedirect: '/login' }));
 
 app.get('/', (req, res) => {
   if(req.isAuthenticated()) {
@@ -76,6 +87,10 @@ app.get('/', (req, res) => {
   } else {
     res.render('login');
   }
+});
+
+app.get('/pp', (req, res) => {
+  res.send('Work in progress');
 });
 
 app.get('/signup', (req, res) => {
