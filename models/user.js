@@ -36,6 +36,15 @@ class User {
             }
         });
     }
+    pageify(req) {
+      if (req.isAuthenticated())
+        this.loggedIn = true;
+      if (req.query.id === req.user.localId)
+        this.owner = true;
+      else
+        this.owner = false;
+      return this;
+    }
     loadPicture(pic, fn) {
         fs.readFile(pic, (err, data) => {
             if(err)
@@ -49,7 +58,7 @@ class User {
         db.loadMessages(this.localId, (data) => {
             this.messages = data;
             if(fn)
-                return fn(); 
+                return fn();
         });
     }
     saveMessage(message, fn) {
@@ -64,7 +73,7 @@ class User {
     save(fn) {
         db.createUser(this.localUsername, this.localPassword, fn);
     }
-    
+
 }
 
 module.exports = User;

@@ -9,8 +9,9 @@ var morgan = require('morgan');
 var db = require('./scripts/database.js');
 var User = require('./models/user.js');
 var fb = require('./scripts/facebook.js');
-var app = express();
 var pgSession = require('connect-pg-simple')(session);
+var app = express();
+
 
 require('./scripts/passport.js')(passport);
 
@@ -90,7 +91,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/pp', (req, res) => {
-  res.send('Work in progress');
+  res.render('pp');
 });
 
 app.get('/signup', (req, res) => {
@@ -120,10 +121,7 @@ app.get('/user', isLoggedOn, (req, res) => {
     User.findOne(req.query.id, true, (err, user) => {
       if(err)
         return console.log(err);
-      if(req.query.id == req.user.localId)
-        user.owner = true;
-      user.loggedIn = req.isAuthenticated();
-      res.render('user', user);
+      res.render('user', user.pageify(req));
     });
 });
 
@@ -143,6 +141,10 @@ app.get('/delete/:id', (req, res) => {
     db.deleteUser(req.params.id, ()=> {
         res.redirect('/list');
     });
+});
+
+app.get('/article', (req, res) => {
+  res.render('article');
 });
 
 app.get('/iframe', (req, res) => {

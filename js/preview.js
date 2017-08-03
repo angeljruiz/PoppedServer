@@ -1,4 +1,3 @@
-/* eslint-disable no-new */
 window.onload = () => {
   var draggable = require('vuedraggable');
   var vm = new Vue({

@@ -12,15 +12,20 @@ mixin head(title)
 mixin header(title)
     .jumbotron.text-center
         h1= title
-    +icons
+
+mixin footer()
+  .row.footer
+    .col-md-12
+      p.text-center.top-10 &copy Angel Ruiz-Bates 2017
+  +icons
 
 mixin navvy(index)
     -
-        var pages = [ 'Home', 'Users', 'Path finder', 'About'];
-        var urls = [ '/', '/list', '/game', '/about' ];
+        var pages = [ 'Home', 'Users', 'Path Finder', 'Articles', 'About'];
+        var urls = [ '/', '/list', '/game', '/article', '/about' ];
     nav(class='navbar navbar-default')
         ul(class='nav nav-pills')
-            each i in [0, 1, 2, 3]
+            each i in [0, 1, 2, 3, 4]
                 li(class={active: index == i}): a(href=urls[i])= pages[i]
             if(loggedIn)
                 li(class='pull-right'): a(href='/logout') Logout
@@ -43,10 +48,10 @@ mixin initFb()
     }
 
 mixin icons
-    a(href= 'https://github.com/ahdelgado')
-        i.fa-3x.fa.fa-github.gitcon
-    a(href='https://www.linkedin.com/in/ruizaj')
-        i.fa-3x.fa.fa-linkedin.linkcon
+  a(href= 'https://github.com/ahdelgado')
+      i.fa-3x.fa.fa-github.gitcon
+  a(href='https://www.linkedin.com/in/ruizaj')
+      i.fa-3x.fa.fa-linkedin.linkcon
 mixin row(size, offset)
     .row
         div(class='col-md-' + size class=offset==0? '' : 'col-md-offset-' + offset)

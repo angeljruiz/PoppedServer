@@ -15,7 +15,7 @@ class Pathfinder {
 
     static checkList(list, tile) {
       for(let i = 0; i < list.length; i++) {
-        if(list[i].x == tile.x && list[i].y == tile.y)
+        if(list[i] === tile)
           return true;
       }
       return false;
@@ -25,7 +25,7 @@ class Pathfinder {
       if (tile.x < 0 || tile.y < 0)
         return;
       for(let i = 0; i < list.length; i++) {
-        if(list[i].x == tile.x && list[i].y == tile.y)
+        if(list[i] === tile)
           return list.splice(i, 1);
       }
     }
@@ -55,7 +55,7 @@ class Pathfinder {
     finished(tile) {
       if (!tile)
         return;
-      if(tile.x == this.end.x && tile.y == this.end.y)
+      if(tile === this.end)
       {
         tile.parent = this.current;
         var node = tile.parent;
@@ -75,19 +75,16 @@ class Pathfinder {
 
     updateValues() {
       let best = this.opened[0];
-      console.log('best ' + best.pos());
       for(let i = 0; i < this.opened.length; i++) {
-        if(this.opened[i].parent) {
+        if(this.opened[i].parent)
           this.opened[i].d = this.opened[i].parent.d + 10;
-        } else if (this.opened[i] != this.start) {
+        else if (this.opened[i] != this.start)
           this.opened[i].d = 10;
-        }
+          
         this.opened[i].h = (Math.abs(this.opened[i].x - this.end.x) + Math.abs(this.opened[i].y - this.end.y)) * 10;
         this.opened[i].t = this.opened[i].d + this.opened[i].h;
-        if(this.opened[i].t < best.t) {
+        if(this.opened[i].t < best.t)
           best = this.opened[i];
-          console.log('updated best ' + best.pos());
-        }
       }
       this.closed.push(best);
       Pathfinder.removeFromList(this.opened, best);
