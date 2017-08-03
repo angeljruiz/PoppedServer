@@ -20,18 +20,16 @@ module.exports = function(passport) {
 
     passport.use('signup', new LocalStrategy( { passReqToCallback: true }, (req, username, password, done) => {
         User.findOne(username, false, (err, user) => {
-            if(err) {
-                console.log('error');
+            if(err)
                 return done(err);
-            }
-            if(user){
+            if(user)
                 return done(null, false);
-            }
             var newUser = new User();
             newUser.localUsername = username;
             newUser.generateHash(password);
             newUser.save(() => {
                 console.log('user created');
+                return done(null, newUser);
             });
         });
     }));

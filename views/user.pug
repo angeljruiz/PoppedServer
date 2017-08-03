@@ -31,11 +31,11 @@ html
                     if(owner || messages.length > 0)
                         .panel.panel-default.messages-panel
                             .row
+                              if (owner)
                                 .col-md-12
                                     textarea.left-35(rows=5 cols=65 style='margin-top: 20px; resize: none' form='save' name='message')
                                 .col-md-12.col-md-offset-9
-                                    if(owner)
-                                        input.margin-bottom-20.top-10(type='submit' class='btn btn-info' value='Submit' form='save')
+                                    input.margin-bottom-20.top-10(type='submit' class='btn btn-info' value='Submit' form='save')
                                 br
                                 br
                             ul(class='list-group')

@@ -37,6 +37,7 @@ app.locals.pretty = true;
 
 var dev = true;
 var users = [];
+var port = 80
 
 function dlog(mesg) {
     if (dev)
@@ -64,8 +65,8 @@ function isLoggedOn(req, res, next) {
 }
 
 
-app.listen(80, () => {
-    console.log('listening on 80');
+app.listen(port, () => {
+    console.log('listening on ' + port);
 });
 
 app.get('/auth/facebook', passport.authenticate('facebook'));
@@ -86,7 +87,7 @@ app.get('/', (req, res) => {
       res.render('user', user);
     });
   } else {
-    res.render('login');
+    res.render('login', { dev: req.connection.remoteAddress === '::1'? true : false});
   }
 });
 
@@ -98,11 +99,9 @@ app.get('/signup', (req, res) => {
    res.render('signup');
 });
 
-app.post('/login', passport.authenticate('login', { session: true, successRedirect : '/', failureRedirect : '/' }), (req, res) => {
-  res.redirect('/');
-});
+app.post('/login', passport.authenticate('login', { session: true, successRedirect : '/', failureRedirect : '/' }));
 
-app.post('/new', passport.authenticate('signup', { session: true, successRedirect:  '/list', failureRedirect: '/signup' }));
+app.post('/new', passport.authenticate('signup', { session: true, successRedirect:  '/login', failureRedirect: '/signup' }));
 
 app.get('/logout', (req, res) => {
    req.logout();

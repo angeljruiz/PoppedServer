@@ -28,7 +28,7 @@ class Database {
         });
     }
     selectUser(id, fn) {
-        let temp = (err, res) => { 
+        let temp = (err, res) => {
             if(err) {
                 return fn(err);
             }
@@ -37,13 +37,13 @@ class Database {
             else
                 return fn(false, false);
         };
-        
+
         if(!isNaN(id)) {
             pool.query('SELECT * FROM users WHERE id = ($1)', [id], temp);
         } else {
             pool.query('SELECT * FROM users WHERE username = ($1)', [id], temp);
         }
-        
+
     }
     deleteUser(id, fn) {
         pool.query('DELETE FROM users WHERE id = ($1)', [id], (err, res) => {
@@ -83,6 +83,5 @@ class Database {
     }
 }
 
-module.exports = new Database();
+module.exports = new Database;
 module.exports.pool = pool;
-
