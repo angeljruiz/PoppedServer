@@ -101,7 +101,16 @@ app.get('/signup', (req, res) => {
 
 app.post('/login', passport.authenticate('login', { session: true, successRedirect : '/', failureRedirect : '/' }));
 
-app.post('/new', passport.authenticate('signup', { session: true, successRedirect:  '/login', failureRedirect: '/signup' }));
+app.post('/new', passport.authenticate('signup', { session: true, failureRedirect: '/signup' }), (req, res) => {
+  console.log(req.user.localUsername);
+  User.findOne(req.user.localUsername, true, (err, user) => {
+    req.login(user, function(err) {
+      if (err)
+        console.log(err);
+      res.redirect('/');
+    });
+  });
+});
 
 app.get('/logout', (req, res) => {
    req.logout();
