@@ -2,28 +2,9 @@ doctype html
 html
     head
         include ../includes/default_page.pug
-        script(src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js")
         +head('Login')
     body(style='background-color: gray')
-        script.
-          particlesJS.load('particles', 'media/particles.json', function() {
-            console.log('callback - particles.js config loaded');
-          });
-          function check() {
-            var user = $("#username").val();
-            var pass = $("#password").val();
-            if (user == '' || pass == '') {
-              alert("Username or password invalid");
-              return false;
-            }
-            return true;
-          }
-        script(async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js")
-        script.
-          (adsbygoogle = window.adsbygoogle || []).push({
-            google_ad_client: "ca-pub-8413214542052984",
-            enable_page_level_ads: true
-          });
+        +particles
         +initFb()
         //.fb-like(data-share="true" data-width="450" data-show-faces="true" style='position: fixed; bottom: 0; left: 77%')
         #fb-root
@@ -36,6 +17,9 @@ html
             .panel.panel-default.login-panel
                 .panel-body
                     br
+                    if (flash.incorrect || flash.notLogged)
+                      .alert.alert-danger.text-center
+                        = flash.incorrect || flash.notLogged
                     +row(6, 3)
                         input.form-control(type='text' name='username' id='username' placeholder='Username' form='login')
                         br
@@ -44,7 +28,7 @@ html
                         br
                     .row
                         .col-md-4(class='col-md-offset-2')
-                            input.form-control(type='submit' onclick='return check();'  class='btn btn-primary' value='Login' form='login')
+                            input.form-control(type='submit' class='btn btn-primary' value='Login' form='login')
                             //a(href='/auth/facebook') Login with Facebook
                         .col-md-4
                             a.form-control(class='btn btn-primary' href='/signup') Register

@@ -38,11 +38,17 @@
 
 }
 
+.main-media {
+  position: relative;
+  left: 38%;
+}
+
+
 .footer {
   position: fixed;
   display: inline-block;
   background-color: #fff;
-  width: 103%;
+  width: 101%;
   height: 5%;
   bottom: 0px;
   left: 0px;

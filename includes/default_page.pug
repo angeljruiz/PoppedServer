@@ -7,11 +7,18 @@ mixin head(title)
     link(href='css/style.css' rel='stylesheet')
     script(src='/js/jq.js')
     script(src='https://unpkg.com/vue@2.4.1')
+    script(src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js")
     link(rel="icon" href="media/icon.ico")
 
 mixin header(title)
     .jumbotron.text-center
         h1= title
+        
+mixin particles()
+  script.
+    particlesJS.load('particles', 'media/particles.json', function() {
+      console.log('callback - particles.js config loaded');
+    });
 
 mixin footer()
   .row.footer
@@ -21,11 +28,11 @@ mixin footer()
 
 mixin navvy(index)
     -
-        var pages = [ 'Home', 'Users', 'Path Finder', 'Articles', 'About'];
-        var urls = [ '/', '/list', '/game', '/article', '/about' ];
+        var pages = [ 'Home', 'Users', 'Path Finder', 'About'];
+        var urls = [ '/', '/list', '/game', '/about' ];
     nav(class='navbar navbar-default')
         ul(class='nav nav-pills')
-            each i in [0, 1, 2, 3, 4]
+            each i in [0, 1, 2, 3]
                 li(class={active: index == i}): a(href=urls[i])= pages[i]
             if(loggedIn)
                 li(class='pull-right'): a(href='/logout') Logout

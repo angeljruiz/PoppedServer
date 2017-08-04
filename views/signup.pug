@@ -21,6 +21,9 @@ html
             .panel.panel-default.login-panel
               .panel-body
                 br
+                if (flash.taken)
+                  .alert.alert-danger.text-center
+                    = flash.taken
                 .form-group
                     +row(6, 3)
                         input.form-control(type='text' name='username' id='username' placeholder='Username' form='signup')

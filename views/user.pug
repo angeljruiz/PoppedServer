@@ -19,7 +19,8 @@ html
                         br
                         .btn-toolbar.left-10
                             a(class='btn btn-primary' href='/list') Back
-                            input(type='submit' class='btn btn-danger' value='Delete' form='delete')
+                            if (owner)
+                              input(type='submit' class='btn btn-danger' value='Delete' form='delete')
                         br
                         .row
                             div(class='col-md-1 col-md-offset-3')

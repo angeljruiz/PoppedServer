@@ -2,6 +2,7 @@
 
 var express = require('express');
 var session = require('express-session');
+var flash = require('express-flash-2');
 var sharp = require('sharp');
 var bp = require('body-parser');
 var passport = require('passport');
@@ -31,6 +32,7 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 app.set('view engine', 'pug');
 app.set('views', './views');
 app.locals.pretty = true;
@@ -61,7 +63,16 @@ function isLoggedOn(req, res, next) {
     if(req.isAuthenticated()) {
         return next();
     }
+    res.flash('notLogged', 'Please sign in')
     res.redirect('/');
+}
+
+function validateInfo(req, res, next) {
+  if (req.body.username === '' || req.body.password === '') {
+    req.res.flash('incorrect', 'Invalid username or password');
+    res.redirect('/');
+  }
+  return next();
 }
 
 
@@ -99,11 +110,10 @@ app.get('/signup', (req, res) => {
    res.render('signup');
 });
 
-app.post('/login', passport.authenticate('login', { session: true, successRedirect : '/', failureRedirect : '/' }));
+app.post('/login', validateInfo, passport.authenticate('login', { session: true, successRedirect : '/', failureRedirect : '/' }));
 
 app.post('/new', passport.authenticate('signup', { session: true, failureRedirect: '/signup' }), (req, res) => {
-  console.log(req.user.localUsername);
-  User.findOne(req.user.localUsername, true, (err, user) => {
+  User.findOne(req.user.localUsername, false, (err, user) => {
     req.login(user, function(err) {
       if (err)
         console.log(err);
