@@ -70,7 +70,10 @@ function isLoggedOn(req, res, next) {
 function validateInfo(req, res, next) {
   if (req.body.username === '' || req.body.password === '') {
     req.res.flash('incorrect', 'Invalid username or password');
-    res.redirect('/');
+    if (req.originalUrl === '/login')
+      return res.redirect('/');
+    else
+      return res.redirect('/signup');
   }
   return next();
 }
@@ -112,7 +115,7 @@ app.get('/signup', (req, res) => {
 
 app.post('/login', validateInfo, passport.authenticate('login', { session: true, successRedirect : '/', failureRedirect : '/' }));
 
-app.post('/new', passport.authenticate('signup', { session: true, failureRedirect: '/signup' }), (req, res) => {
+app.post('/new', validateInfo, passport.authenticate('signup', { session: true, failureRedirect: '/signup' }), (req, res) => {
   User.findOne(req.user.localUsername, false, (err, user) => {
     req.login(user, function(err) {
       if (err)

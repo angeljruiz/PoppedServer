@@ -4,26 +4,16 @@ html
         include ../includes/default_page.pug
         +head('Signup')
     body(style='background-color: gray')
-        script.
-            function check() {
-                var user = $("#username").val();
-                var pass = $("#password").val();
-                if (user == '' || pass == '') {
-                    alert("Username or password invalid");
-                    return false;
-                }
-                return true;
-            }
         form(action='/new' method='POST' id='signup')
-        .container
+        .fluidcontainer
             +header('Signup')
             +navvy(0)
             .panel.panel-default.login-panel
               .panel-body
                 br
-                if (flash.taken)
+                if (flash.taken || flash.incorrect)
                   .alert.alert-danger.text-center
-                    = flash.taken
+                    = flash.taken || flash.incorrect
                 .form-group
                     +row(6, 3)
                         input.form-control(type='text' name='username' id='username' placeholder='Username' form='signup')
@@ -32,4 +22,4 @@ html
                         input.form-control(type='password' name='password' id='password' placeholder='Password' form='signup')
                         br
                     +row(4, 4)
-                        input.form-control(type='submit' onclick='return check();'  class='btn btn-primary' value='Register' form='signup')
+                        input.form-control(type='submit' class='btn btn-primary' value='Register' form='signup')

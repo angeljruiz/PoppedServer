@@ -32,8 +32,8 @@ class Pathfinder {
 
     findPath() {
       let i = 0;
-      while (!this.addToOpen() && i <= 300) {
-        i++;
+      while (!this.addToOpen() && i <= 500) {
+          i++;
       }
     }
 
@@ -80,7 +80,7 @@ class Pathfinder {
           this.opened[i].d = this.opened[i].parent.d + 10;
         else if (this.opened[i] != this.start)
           this.opened[i].d = 10;
-          
+
         this.opened[i].h = (Math.abs(this.opened[i].x - this.end.x) + Math.abs(this.opened[i].y - this.end.y)) * 10;
         this.opened[i].t = this.opened[i].d + this.opened[i].h;
         if(this.opened[i].t < best.t)
