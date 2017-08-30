@@ -1,0 +1,130 @@
+doctype html
+html
+  head
+    title Test Page: Don't Panic
+    meta(charset='utf-8')
+    link(href='css/reset.css' rel='stylesheet')
+    link(href='css/style2.css' rel='stylesheet')
+    include ../includes/default_page.pug
+  body
+    header.header
+      nav
+        ul.header-nav
+          +nav-links
+      a.header-logo(href='/')
+        img(src="/media/icon.png" alt="Bates")
+
+    .full-hero.hero-home
+      .hero-content
+        h1 CODE DANGEROUSLY
+        ul.social-list
+          li
+            a.social-link(href='http://example.com/') Fb
+          li
+            a.social-link(href='http://example.com/') Tw
+          li
+            a.social-link(href='http://example.com/') Gh
+    .home-callout
+      h1.callout-title The Learn Enough Story
+      .callout-copy
+        p
+          | Learn Enough to Be Dangerous is a leader in the movement to teach the world
+          em technical sophistication
+          | , which includes both "hard skills" like
+          |       coding, command lines, and version control, and "soft skills" like guessing
+          |       keyboard shortcuts, Googling error messages, and knowing when to just
+          |       reboot the darn thing.
+        p
+          | We believe there are 
+          strong at least a billion people
+          |  who can
+          |       benefit from learning technical sophistication, probably more. To join our
+          |       movement, 
+          a(href='https://learnenough.com/#email_list')
+            | sign up for our
+            | official email list
+          |  now.
+        h3 Background
+        p
+          | Learn Enough to Be Dangerous is an outgrowth of the
+          a(href='http://railstutorial.org/') Ruby on Rails Tutorial
+          |  and the
+          a(href='http://www.softcover.io/') Softcover publishing platform
+          | . This
+          |       page is part of the sample site for 
+          a(href='https://learnenough.com/css-tutorial')
+            em
+              | Learn Enough CSS and Layout
+              | to Be Dangerous
+          | , which teaches the basicics of
+          strong C
+          | ascading 
+          strong S
+          | tyle
+          strong S
+          | heets, the language that
+          |       allows web pages to be styled. Other related tutorials can be found at
+          a(href='https://learnenough.com/') learnenough.com
+          | .
+    .home-section
+      h2 THE FOUNDERS
+      p
+        | Learn Enough to Be Dangerous was founded in 2015 by Michael Hartl, Lee
+        | Donahoe, and Nick Merwin. We believe that the kind of technical
+        | sophistication taught by the Learn Enough tutorials can benefit at least a
+        | billion people, and probably more.
+      .bio-wrapper
+        .bio-box
+          img(src='http://placekitten.com/g/400/400')
+          h3 Michael Hartl
+          a.social-link(href='http://twitter.com/mhartl')
+            | Tw
+          .bio-copy
+            p
+              | Known for his dazzling charm, rapier wit, and unrivaled humility,
+              | Michael is the creator of the
+              a(href='http://railstutorial.org/')
+                | Ruby on Rails
+                | Tutorial
+              |  and principal author of the
+              a(href='https://learnenough.com/')  Learn Enough to Be Dangerous
+              |           introductory sequence.
+            p
+              | Michael is also notorious as the founder of
+              a(href='http://tauday.com/') Tau Day
+              |  and author of
+              a(href='http://tauday.com/tau-manifesto')
+                em
+                  | The Tau
+                  | Manifesto
+              | , but rumors that he's secretly a supervillain are
+              |           slightly exaggerated.
+        .bio-box
+          img(src='http://placekitten.com/g/400/400')
+          h3 Lee Donahoe
+          a.social-link(href='https://twitter.com/leedonahoe')
+            | Tw
+          .bio-copy
+            p
+              | When he's not literally swimming with sharks or hunting powder stashes
+              | on his snowboard, you can find Lee in front of his computer designing
+              | interfaces, doing front-end development, or writing some of the
+              | interface-related Learn Enough tutorials.
+        .bio-box
+          img(src='http://placekitten.com/g/400/400')
+          h3 Nick Merwin
+          a.social-link(href='https://twitter.com/nickmerwin')
+            | Tw
+          .bio-copy
+            p
+              | You may have seen him shredding guitar live with Capital Cities on
+              | Jimmy Kimmel, Conan, or The Ellen Show, but rest assured Nick is a true
+              | nerd at heart. He's just as happy shredding well-spec'd lines of code
+              | from a tour bus as he is from his kitchen table.
+
+  .footer
+    a.footer-logo(href='/')
+      img(src="/media/icon.png" alt="Bates")
+    .footer-nav.nav-link
+      +nav-links
+    h3 &copy 2017 Angel Ruiz-Bates

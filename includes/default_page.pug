@@ -2,10 +2,10 @@ mixin head(title)
     title= title
     meta(charset="utf-8")
     meta(name='viewport' content='width=device-width, initial-scale=1')
+    link(href='css/reset.css' rel='stylesheet')
     link(href='css/bootstrap.min.css' rel='stylesheet')
     link(href='css/font-awesome.min.css' rel='stylesheet')
     link(href='css/style.css' rel='stylesheet')
-    script(src='/js/jq.js')
     script(src='https://unpkg.com/vue@2.4.1')
     script(src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js")
     link(rel="icon" href="media/icon.ico")
@@ -21,9 +21,8 @@ mixin particles()
     });
 
 mixin footer()
-  .row.footer
-    .col-md-12
-      p.text-center.top-10 &copy 2017 Alcides Ruiz
+  .footer
+    p.text-center.top-10 &copy 2017 Angel Ruiz-Bates
   +icons
 
 mixin navvy(index)
@@ -36,6 +35,27 @@ mixin navvy(index)
                 li(class={active: index == i}): a(href=urls[i])= pages[i]
             if(loggedIn)
                 li(class='pull-right'): a(href='/logout') Logout
+                
+mixin newNav(index)
+  -
+    var pages = [ 'Home', 'Users', 'Path Finder', 'About'];
+    var urls = [ '/', '/list', '/game', '/about' ];
+  nav(class='navbar navbar-default navbar-fixed-top')
+      ul(class='nav nav-pills')
+          each i in [0, 1, 2, 3]
+              li(class={active: index == i}): a(href=urls[i])= pages[i]
+          if(loggedIn)
+              li(class='pull-right'): a(href='/logout') Logout
+                
+mixin nav-links()
+  li 
+    a(href="/") Home
+  li 
+    a(href="") Nav 1
+  li 
+    a(href="") Nav 2
+  li 
+    a(href="") Nav 3
 mixin initFb()
   script.
     window.fbAsyncInit = function() {
@@ -55,9 +75,9 @@ mixin initFb()
     }
 
 mixin icons
-  a(href= 'https://github.com/ahdelgado')
+  a(href= 'https://github.com/aruizbates')
       i.fa-3x.fa.fa-github.gitcon
-  a(href='https://www.linkedin.com/in/ruizaj')
+  //- a(href='https://www.linkedin.com/in/ruizaj')
       i.fa-3x.fa.fa-linkedin.linkcon
 mixin row(size, offset)
     .row

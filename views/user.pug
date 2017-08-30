@@ -5,7 +5,9 @@ html
         +head('Profile')
 
     body(style='background-color: gray')
-        .fluidcontainer
+        +particles
+        div(id='particles')
+        .fluidcontainer(id="main")
             +header(localUsername)
             - var index = owner ? 0 : 1
             +navvy(index)
@@ -14,32 +16,39 @@ html
                 input(type='hidden' id='id' name='id' value=localId)
 
             .row
-                .col-md-6
+                .col-md-5.col-md-offset-1
                     .panel.panel-default.user-panel
                         br
                         .btn-toolbar.left-10
-                            a(class='btn btn-primary' href='/list') Back
                             if (owner)
-                              input(type='submit' class='btn btn-danger' value='Delete' form='delete')
+                              input.left-20(type='submit' class='btn btn-danger' value='Delete' form='delete')
                         br
                         .row
-                            div(class='col-md-1 col-md-offset-3')
+                            .col-md-1.col-md-offset-3
                                 img(src='/photo/' + localId)
-                            div(class='col-md-8 left-10 bottom-10')
+                            .col-md-8.left-10.bottom-10
                                 h2='Username '
                                     span(class='label label-primary left-10')= localUsername
-                .col-md-6
+                .col-md-5.col-xs-12
                     if(owner || messages.length > 0)
                         .panel.panel-default.messages-panel
-                            .row
-                              if (owner)
-                                .col-md-12
-                                    textarea.left-35(rows=5 cols=65 style='margin-top: 20px; resize: none' form='save' name='message')
-                                .col-md-12.col-md-offset-9
-                                    input.margin-bottom-20.top-10(type='submit' class='btn btn-info' value='Submit' form='save')
-                                br
-                                br
-                            ul(class='list-group')
-                                each message in messages
-                                    li(class='list-group-item text-center')= message.messages
-            +footer
+                          if (owner)
+                            .form-group
+                              .row
+                                .col-xs-10.col-xs-offset-1.col-md-8
+                                  textarea.form-control.messages-box(rows=5 form='save' name='message')
+                                .col-xs-1.col-xs-offset-8.col-md-offset-8
+                                  input.submit-messages(type='submit' class='btn btn-info' value='Submit' form='save')
+                            br
+                          ul(class='list-group')
+                              each message in messages
+                                  li.list-group-item.text-center.message(@mouseover='hover')= message.text
+                                    a
+                                      button.message-delete.btn.btn-danger.btn-sm.pull-right(@click="deleteMessage(message.id)") Delete
+                br
+                br
+                br
+                br
+              
+        script(src='vue/vue.js')
+        +footer

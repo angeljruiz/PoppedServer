@@ -13,10 +13,9 @@ function dragging(event) {
     console.log(event);
 }
 
-$(document).ready(() => {
-    var $canvas = $('#canvy');
+window.onload = () => {
+    var canvas = document.getElementById('canvy');
     var board = new Board(25, 20, (pos) => {
-        var canvas = document.getElementById('canvy');
         var ctx = canvas.getContext('2d');
         switch (pos.type) {
             case 1:
@@ -49,20 +48,9 @@ $(document).ready(() => {
         }
     });
     pf = new Pathfinder(board, [0,0], [24,19]);
-    $canvas.click( (event) => {
+    canvas.addEventListener('click', (event) => {
         board.setType(translatePos(event));
         board.draw(board.getTile(translatePos(event)));
     });
 
-    $canvas.mousedown( ()=> {
-        cbID = setInterval(dragging, 120, event);
-    });
-
-    $canvas.mouseup( ()=> {
-        clearInterval(cbID);
-    });
-
-    $canvas.mouseleave( () => {
-        clearInterval(cbID);
-    });
-});
+}

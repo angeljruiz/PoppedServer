@@ -1,7 +1,7 @@
 "use strict";
 
 var db = require('pg');
-var config = { user: 'postgres', database: 'Reach', password: 'mamadaS123', host: 'localhost', port: 5432, max: 10, idleTimeoutMillis: 30000 };
+var config = { user: 'postgres', database: 'Reach', password: 'MaMadas321', host: '127.0.0.1', port: 5432, max: 10, idleTimeoutMillis: 30000 };
 var pool = new db.Pool(config);
 
 pool.on('error', function (err) {
@@ -70,7 +70,7 @@ class Database {
             if(err)
                 return console.error('error running query', err);
             for(let i=0;i<res.rows.length;i++)
-                this.messages.push({ id: res.rows[i].id, messages: res.rows[i].message });
+                this.messages.push({ id: res.rows[i].id, text: res.rows[i].message });
             return fn(this.messages);
         });
     }

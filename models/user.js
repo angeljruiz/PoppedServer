@@ -22,7 +22,7 @@ class User {
                 if(data.pp) {
                     user.profilePicture = data.pp;
                 } else {
-                    user.loadPicture('./media/df.png', () => {
+                    user.loadPicture('../media/df.png', () => {
                         if(messages)
                             user.loadMessages( () => {
                                 return fn(false, user);

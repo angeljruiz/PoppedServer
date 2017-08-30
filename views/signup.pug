@@ -4,11 +4,13 @@ html
         include ../includes/default_page.pug
         +head('Signup')
     body(style='background-color: gray')
+        +particles
+        div(id='particles')
         form(action='/new' method='POST' id='signup')
         .fluidcontainer
             +header('Signup')
             +navvy(0)
-            .panel.panel-default.login-panel
+            .panel.panel-default.login-panel.col-md-6.col-md-offset-3
               .panel-body
                 br
                 if (flash.taken || flash.incorrect)
@@ -23,3 +25,4 @@ html
                         br
                     +row(4, 4)
                         input.form-control(type='submit' class='btn btn-primary' value='Register' form='signup')
+                br

@@ -1,3 +1,7 @@
+body {
+  width: 100vw;
+  /*overflow: hidden;*/
+}
 .jumbotron h1 {
     color: white;
 }
@@ -19,15 +23,6 @@
     border-radius: 0px;
 }
 
-.normal {
-    background-color: grey;
-}
-.drag {
-    background-color: green;
-}
-.dragArea{
-     min-height: 10px;
-}
 .navbar {
   /*position: fixed;*/
     /*background-color: #181818;*/
@@ -45,13 +40,13 @@
 
 
 .footer {
-  position: fixed;
-  display: inline-block;
+  position: absolute;
+  /*display: inline-block;*/
   background-color: #fff;
-  width: 104%;
+  width: 100vw;
   height: 40px;
   bottom: 0px;
-  left: 0px;
+  /*left: 0px;*/
 }
 
 
@@ -67,16 +62,16 @@
 
 #particles {
     position: absolute;
-    width: 100%;
-    height: 100%;
+    width: 100px;
+    height: 800px;
     z-index: -1;
 }
 
-.panel.login-panel {
+/*.panel.login-panel {
     position: relative;
-    width: 50%;
-    left: 25%;
-}
+    width: 65%;
+    left: 17%;
+}*/
 
 .panel.user-panel {
     position: relative;
@@ -88,10 +83,27 @@
     padding-bottom: 10px;
 }
 
+.messages-box {
+    position: relative;
+    /*left: 35px;*/
+    margin-top: 20px;
+    resize: none;
+}
 .submit-messages {
     position: relative;
     top: 20px;
-    margin-top: 20px;
+    right: 35px;
+    /*margin-top: 20px;*/
+}
+.message .message-delete {
+  visibility: hidden;
+  border: 1px solid red;
+  /*width: auto;*/
+}
+
+
+.message :hover .message-delete {
+  visibility: visible;
 }
 
 .preview-frame {
@@ -100,13 +112,13 @@
 
 .gitcon {
     /*background-color: darkgrey;*/
-    position: fixed;
+    position: absolute;
     bottom: 0;
     left: 10px;
 }
 .linkcon {
     /*background-color: #fff;*/
-    position: fixed;
+    position: absolute;
     bottom: 0;
     left: 55px;
 }
@@ -177,6 +189,10 @@
     left: 40px;
 }
 
+.margin-bottom-10 {
+    margin-bottom: 10px;
+}
+
 .margin-bottom-20 {
     margin-bottom: 20px;
 }
@@ -206,7 +222,7 @@
 }
 
 .padding-top-20 {
-    padding-top: 10px;
+    padding-top: 20px;
 }
 
 .border-right-10 {
