@@ -1,4 +1,9 @@
 var path = require('path');
+var fs = require('fs');
+var multer = require('multer');
+var mailer = require('nodemailer');
+var crypto = require('crypto');
+var upload = multer({ dest: 'uploads/' });
 var User = require('../models/user.js');
 
 function isLoggedOn(req, res, next) {
@@ -33,10 +38,6 @@ module.exports = (app, db, passport) => {
     }
   });
 
-  app.get('/style', (req, res) => {
-    res.render('test');
-  });
-
   app.get('/list', (req, res) => {
     db.loadUsers( users => {
       res.render('list', { users: users, loggedIn: req.isAuthenticated() });
@@ -52,6 +53,35 @@ module.exports = (app, db, passport) => {
           console.log(err);
         res.redirect('/');
       });
+    });
+  });
+
+  // app.post('/forgot', (req, res, next) => {
+  //   async.waterfall([
+  //     done => {
+  //       crypto.randomBytes(20, (err, buf) => {
+  //         let token = buf.toString('hex');
+  //         done(err, token);
+  //       });
+  //     },
+  //     (token, done) {
+  //       User.findone()
+  //     }
+  //   ])
+  // })
+
+  app.post('/createart', upload.fields([{ name: 'media', maxCount: 1 }, { name: 'thumbnail', maxCount: 1 }]), (req, res) => {
+    if (req.isAuthenticated() && req.user.localUsername === 'angel') {
+      console.log(req.files);
+      // db.createart(req.body.title, req.body.description, req.files.media, req.files.thumbnail, req.body.data)
+    }
+    res.redirect('/creator')
+  });
+
+  app.get('/articlelist', (req, res) => {
+    db.listarticles( articles => {
+      console.log(articles);
+      res.render('articlelist', {articles: articles});
     });
   });
 
@@ -90,14 +120,6 @@ module.exports = (app, db, passport) => {
       });
   });
 
-  app.get('/article', (req, res) => {
-    res.render('article');
-  });
-
-  app.get('/iframe', (req, res) => {
-    res.render('preview');
-  });
-
   app.get('/getUsers', (req, res) => {
     db.loadUsers( users => {
       let temp = JSON.stringify(users);
@@ -109,14 +131,6 @@ module.exports = (app, db, passport) => {
 
   app.get('/auth/facebook/return', passport.authenticate('facebook', { successRedirect: '/',
                                         failureRedirect: '/login' }));
-
-  app.get('/pp', (req, res) => {
-    res.render('pp');
-  });
-
-  app.get('/signup', (req, res) => {
-     res.render('signup');
-  });
 
   // app.get('/getMessages', loadMessages, (req, res) => {
   //     res.send(JSON.stringify(users.messages));

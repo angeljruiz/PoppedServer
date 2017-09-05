@@ -95,6 +95,14 @@ body {
     right: 35px;
     /*margin-top: 20px;*/
 }
+
+.articledata {
+  resize: none;
+}
+
+.articlelist {
+  list-style-type: none;
+}
 .message .message-delete {
   visibility: hidden;
   border: 1px solid red;

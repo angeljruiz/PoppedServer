@@ -1,0 +1,23 @@
+doctype html
+html
+    head
+        include ../includes/default_page.pug
+        +head('Article List')
+    body(style='background-color: gray')
+      //- +particles
+      div(id='particles')
+      .fluidcontainer
+          +header('Article List')
+          +navvy(2)
+          .row
+            .col-md-10.col-md-offset-1
+              .panel.panel-default
+                  .panel-body
+                    ul.list-group
+                      each article in articles
+                        li.articlelist.list-group-item
+                          strong= article.title 
+                          .text-center= article.desc
+                          //- hr
+                      
+          +footer

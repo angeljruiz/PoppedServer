@@ -1,0 +1,37 @@
+doctype html
+html
+    head
+        include ../includes/default_page.pug
+        +head('Creator')
+    body(style='background-color: gray')
+      //- +particles
+      div(id='particles')
+      .fluidcontainer
+          +header('Creator')
+          +navvy(2)
+          .row
+            .col-md-10.col-md-offset-1
+              .panel.panel-default
+                  .panel-body
+                    .form-group
+                      form(action='/createart' method='POST' enctype="multipart/form-data")
+                        h3 
+                          strong Article title
+                        input.form-control(type='text' name='title' placeholder='Enter title here')
+                        h3 
+                          strong Description
+                        input.form-control(type='text' name='description' placeholder='Enter description here')
+                        h3
+                          strong Media 
+                        input(type='file' name='media' placeholder='Enter media name here')
+                        h3 
+                          strong Thumbnail 
+                        input(type='file' name='thumbnail' placeholder='Enter thumbnail name here')
+                        h3 
+                          strong Article data
+                        textarea.articledata.form-control(rows=6 name='data' placeholder='Enter article data here')
+                        br
+                        input.btn.btn-primary(type='submit' value='Submit')
+                        
+                        
+          +footer

@@ -40,7 +40,7 @@ html
                                 .col-xs-1.col-xs-offset-8.col-md-offset-8
                                   input.submit-messages(type='submit' class='btn btn-info' value='Submit' form='save')
                             br
-                          ul(class='list-group')
+                          ul.list-group
                               each message in messages
                                   li.list-group-item.text-center.message(@mouseover='hover')= message.text
                                     a

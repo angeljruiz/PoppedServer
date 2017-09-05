@@ -7,6 +7,7 @@ var sharp = require('sharp');
 var bp = require('body-parser');
 var passport = require('passport');
 var morgan = require('morgan');
+var fs = require('fs');
 var db = require('./scripts/database.js');
 var pgSession = require('connect-pg-simple')(session);
 var app = express();
@@ -36,6 +37,19 @@ app.set('views', './views');
 // app.locals.pretty = true;
 
 require('./scripts/routes.js')(app, db, passport);
+
+var autoViews = {};
+
+app.use( (req, res, next) => {
+  var path = req.path.toLowerCase();
+
+  if (autoViews[path]) return res.render(autoViews[path]);
+  if (fs.existsSync(__dirname + '/views' + path + '.pug')) {
+    autoViews[path] = path.replace(/^\//, '');
+    return res.render(autoViews[path]);
+  }
+  next();
+});
 
 var port = 80
 
