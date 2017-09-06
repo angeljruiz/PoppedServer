@@ -15,8 +15,8 @@ function isLoggedOn(req, res, next) {
 }
 
 function validateInfo(req, res, next) {
-  if (req.body.username === '' || req.body.password === '') {
-    req.res.flash('incorrect', 'Invalid username or password');
+  if (req.body.username === '' || req.body.password === '' || req.body.email === '') {
+    req.res.flash('incorrect', 'Invalid username, email, or password');
     if (req.originalUrl === '/login')
       return res.redirect('/');
     else
@@ -28,7 +28,7 @@ function validateInfo(req, res, next) {
 module.exports = (app, db, passport) => {
   app.get('/', (req, res) => {
     if(req.isAuthenticated()) {
-      User.findOne(req.user.localId, true, (err, user) => {
+      new User({ localId: req.user.localId, messages: true }, (err, user) => {
         user.loggedIn = true;
         user.owner = true;
         res.render('user', user);
@@ -47,7 +47,7 @@ module.exports = (app, db, passport) => {
   app.post('/login', validateInfo, passport.authenticate('login', { session: true, successRedirect : '/', failureRedirect : '/' }));
 
   app.post('/new', validateInfo, passport.authenticate('signup', { session: true, failureRedirect: '/signup' }), (req, res) => {
-    User.findOne(req.user.localUsername, false, (err, user) => {
+    new User({ localUsername: req.user.localUsername }, (err, user) => {
       req.login(user, function(err) {
         if (err)
           console.log(err);
@@ -71,22 +71,40 @@ module.exports = (app, db, passport) => {
   // })
 
   app.post('/createart', upload.fields([{ name: 'media', maxCount: 1 }, { name: 'thumbnail', maxCount: 1 }]), (req, res) => {
+    let media, thumbnail = 0;
     if (req.isAuthenticated() && req.user.localUsername === 'angel') {
-      console.log(req.files);
-      // db.createart(req.body.title, req.body.description, req.files.media, req.files.thumbnail, req.body.data)
+      fs.readFile(req.files.media[0].path, (err, data) => {
+        if (err) {
+          console.log('error');
+          return;
+        }
+        media = data;
+
+        fs.readFile(req.files.thumbnail[0].path, (err, data2) => {
+          if (err) {
+            console.log('error');
+            return;
+          }
+          thumbnail = data2;
+
+          db.createart(req.body.title, req.body.description, media, thumbnail, req.body.data, () => {
+            fs.unlink(req.files.media[0].path);
+            fs.unlink(req.files.thumbnail[0].path);
+          });
+        });
+      });
     }
     res.redirect('/creator')
   });
 
   app.get('/articlelist', (req, res) => {
     db.listarticles( articles => {
-      console.log(articles);
       res.render('articlelist', {articles: articles});
     });
   });
 
   app.get('/user', isLoggedOn, (req, res) => {
-      User.findOne(req.query.id, true, (err, user) => {
+      new User({ localId: req.query.id, messages: true }, (err, user) => {
         if(err)
           return console.log(err);
         res.render('user', user.pageify(req));
@@ -94,11 +112,7 @@ module.exports = (app, db, passport) => {
   });
 
   app.get('/photo/:id', isLoggedOn, (req, res) => {
-    User.findOne(req.query.id, false, (err, user) => {
-      if(!User.profilePicture) {
-        res.sendFile(path.resolve(__dirname, '../media/df.png'));
-      }
-    });
+    res.sendFile(path.resolve(__dirname, '../media/df.png'));
   });
 
   app.get('/about', (req, res) => {

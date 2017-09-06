@@ -1,18 +1,30 @@
 var fs = require('fs');
 var bcrypt = require('bcrypt-nodejs');
 var db = require('../scripts/database.js');
+var sync = require('async');
 
 class User {
-    constructor() {
-        this.localUsername = 0;
-        this.localPassword = 0;
-        this.localId = -1;
-        this.profilePicture = 0;
-        this.messages = [];
+    constructor(input, fn) {
+      this.localUsername = 0;
+      this.localEmail = 0;
+      this.localPassword = 0;
+      this.localId = -1;
+      this.profilePicture = 0;
+      this.messages = [];
+      if (input) {
+        if (input.localUsername) {
+          this.localUsername = input.localUsername;
+        } else if (input.localEmail) {
+          this.localEmail = input.localEmail;
+        } else if (input.localId) {
+          this.localId = input.localId;
+        }
+        return User.findOne(this, this.messages, fn);
+      }
     }
     static findOne(id, messages, fn) {
+        let user = new User();
         db.selectUser(id, (error, data) => {
-            let user = new User();
             if(error)
                 return fn(error);
             if(data) {
@@ -71,7 +83,7 @@ class User {
         return bcrypt.compareSync(password, this.localPassword);
     }
     save(fn) {
-        db.createUser(this.localUsername, this.localPassword, fn);
+        db.createUser(this.localUsername, this.localEmail, this.localPassword, fn);
     }
 
 }

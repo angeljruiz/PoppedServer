@@ -27,7 +27,7 @@ class Database {
             fn(this.users);
         });
     }
-    selectUser(id, fn) {
+    selectUser(user, fn) {
         let temp = (err, res) => {
             if(err) {
                 return fn(err);
@@ -37,11 +37,12 @@ class Database {
             else
                 return fn(false, false);
         };
-
-        if(!isNaN(id)) {
-            pool.query('SELECT * FROM users WHERE id = ($1)', [id], temp);
-        } else {
-            pool.query('SELECT * FROM users WHERE username = ($1)', [id], temp);
+        if (user.localId !== -1) {
+          pool.query('SELECT * FROM users WHERE id = ($1)', [user.localId], temp);
+        } else if (user.localUsername !== 0) {
+          pool.query('SELECT * FROM users WHERE username = ($1)', [user.localUsername], temp);
+        } else if (user.localEmail !== 0) {
+          pool.query('SELECT * FROM users WHERE email = ($1)', [user.localEmail], temp);
         }
 
     }
@@ -53,15 +54,16 @@ class Database {
             return fn(true);
         });
     }
-    createUser(username, password, fn) {
-        if(username  === '' || password === '') {
+    createUser(username, email, password, fn) {
+        if(username  === '' || password === '' || email === '') {
             return res.send('bad username or pass');
         }
-        pool.query('INSERT INTO users (username, password) VALUES ($1, $2)', [username, password], function(err) {
+        pool.query('INSERT INTO users (username, email, password) VALUES ($1, $2, $3)', [username, email, password], function(err) {
             if(err) {
                 return console.error('error running query', err);
             }
-            fn();
+            if (fn)
+              fn();
         });
     }
     loadMessages(oid, fn) {
@@ -80,6 +82,28 @@ class Database {
                 return console.error('error running query', err);
             fn();
         });
+    }
+    createart(title, desc, media, thumbnail, data, fn) {
+      console.log(media);
+      if (title && desc && media && thumbnail) {
+        pool.query('INSERT INTO articles (title, description, media, thumbnail, data) VALUES ($1, $2, $3, $4, $5)', [title, desc, media, thumbnail, data], (err, res) => {
+            if(err)
+                return console.error('error running query', err);
+            if (fn)
+              fn();
+        });
+      }
+    }
+    listarticles(fn) {
+      let articles = [];
+      pool.query('SELECT * FROM articles', (err, res) => {
+          if(err)
+              return console.error('error running query', err);
+          for (let i=0; i<res.rows.length; i++) {
+            articles.push({ title: res.rows[i].title, desc: res.rows[i].description, thumbnail: res.rows[i].thumbnail });
+          }
+          return fn(articles);
+      });
     }
 }
 

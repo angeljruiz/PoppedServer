@@ -13,13 +13,13 @@ module.exports = function(passport) {
     });
 
     passport.deserializeUser(function(id, done) {
-        User.findOne(id, false, (err, user) => {
-            done(err, user);
-        });
+      new User({ localId: id }, (err, user) => {
+        return done(null, user);
+      });
     });
 
     passport.use('signup', new LocalStrategy( { passReqToCallback: true }, (req, username, password, done) => {
-        User.findOne(username, false, (err, user) => {
+        new User({ localUsername: username }, (err, user) => {
             if(err)
                 return done(err);
             if(user) {
@@ -28,6 +28,7 @@ module.exports = function(passport) {
               }
             var newUser = new User();
             newUser.localUsername = username;
+            newUser.localEmail = req.body.email;
             newUser.generateHash(password);
             newUser.save(() => {
                 console.log('user created');
@@ -36,7 +37,7 @@ module.exports = function(passport) {
         });
     }));
     passport.use('login', new LocalStrategy( { passReqToCallback: true }, (req, username, password, done) => {
-        User.findOne(username, false, (err, user) => {
+        new User({ localUsername: username }, (err, user) => {
             if(err)
                 return done(err);
             if(!user || !user.validPassword(password)) {
