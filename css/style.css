@@ -1,20 +1,17 @@
+
 body {
   width: 100vw;
-  /*overflow: hidden;*/
+  min-height: 100%;
+  overflow: hidden;
 }
 .jumbotron h1 {
     color: white;
 }
-.container .jumbotron {
-    padding-top: 15px;
-    padding-bottom: 1px;
-    margin-top: 30px;
-    margin-bottom: 0px;
-    background-color: #337ab7;
-    border-radius: 0px;
+.container-fluid {
+    /*padding-bottom: 60px;*/
 }
 
-.fluidcontainer .jumbotron {
+.container-fluid .jumbotron {
     padding-top: 15px;
     padding-bottom: 1px;
     margin-top: 30px;
@@ -24,31 +21,26 @@ body {
 }
 
 .navbar {
-  /*position: fixed;*/
-    /*background-color: #181818;*/
-    /*border-bottom-color: #939393;*/
-    /*border-left-color: #939393;*/
-    /*border-right-color: #939393;*/
-    /*border-top-color: #939393;*/
-
+  padding: .5rem 0rem .5rem
 }
 
 .main-media {
-  position: relative;
-  left: 38%;
+  margin: auto;
 }
 
 
 .footer {
   position: absolute;
-  /*display: inline-block;*/
   background-color: #fff;
-  width: 100vw;
+  width: 100%;
   height: 40px;
-  bottom: 0px;
-  /*left: 0px;*/
+  bottom: 0;
+  /*position: relative;
+  margin-top: -150px;
+  height: 40px;
+  clear:both;
+  padding-top:20px;*/
 }
-
 
 .nav>li>a {
     padding: 15px 25px;
@@ -121,7 +113,7 @@ body {
 .gitcon {
     /*background-color: darkgrey;*/
     position: absolute;
-    bottom: 0;
+    bottom: -5px;
     left: 10px;
 }
 .linkcon {
@@ -136,8 +128,13 @@ body {
   margin: 2vh 0 0 4vh
 }
 
+.input-group-addon {
+    min-width: 100px;
+    text-align: right;
+}
+
 .indent {
-    text-indent: 4rem;
+    text-indent: 2rem;
 }
 .bottom-10 {
     position: relative;

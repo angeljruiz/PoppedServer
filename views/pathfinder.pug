@@ -1,50 +1,31 @@
-//
-   Created by angel on 6/13/17.
+extends ../includes/layout.pug
 
-doctype html
-html
-    head
-        include ../includes/default_page.pug
-        script(async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js")
-        script.
-          (adsbygoogle = window.adsbygoogle || []).push({
-            google_ad_client: "ca-pub-8413214542052984",
-            enable_page_level_ads: true
-          });
-        +head('Tiles')
-    body(style='background-color: gray')
-        script(src='js/pathfinder.js')
-        script(src='js/board.js')
-        script(src='js/game.js')
-        +particles
-        div(id='particles')
-        .fluidcontainer
-            +header('Path finder')
-            +navvy(2)
-
-            +row(2, 6)
-                i(class='fa f a-play fa-2x')
-            br
-            .row
-              .col-md-2
-                .panel.panel-default
-                  .panel-body
-                    .row
-                      .col-md-6
-                        input.btn.btn-info(type='button' value='Run' onClick='pf.findPath()')
-                      .col-md-6
-                        input.btn.btn-info.right-10(type='button' value='Reset' onClick='pf.reset(true, false)')
-                      .col-md-6
-                        input.btn.btn-info.margin-top-20(type='button' value='Step' onClick='pf.addToOpen()')
-                      .col-md-6
-                        input.btn.btn-info.margin-top-20.right-10(type='button' value='Clear' onClick='pf.reset(true, true)')
+append resources
+  title Path Finder
+  script(src='js/pathfinder.js')
+  script(src='js/board.js')
+  script(src='js/game.js')
+  
+append body
+  +header('Path Finder')
+  +navvy(1)
+  +row(2, 6)
+      i(class='fa f a-play fa-2x')
+  br
+  .row
+    .col-md-2
+      .card
+        .card-body
+          .row
+            .col-md-6
+              input.btn.btn-info(type='button' value='Run' onClick='pf.findPath()')
+            .col-md-6
+              input.btn.btn-info.right-10(type='button' value='Reset' onClick='pf.reset(true, false)')
+            .col-md-6
+              input.btn.btn-info.margin-top-20(type='button' value='Step' onClick='pf.addToOpen()')
+            .col-md-6
+              input.btn.btn-info.margin-top-20.right-10(type='button' value='Clear' onClick='pf.reset(true, true)')
 
 
-              .col-md-10
-                canvas(id='canvy' width=800 height=640 style="border:1px solid #000000; position:relative; top:0px; left:-15px")
-
-
-            br
-            br
-            br
-        +footer
+    .col-md-10
+      canvas(id='canvy' width=800 height=640 style="border:1px solid #000000; position:relative; top:0px; left:-15px")

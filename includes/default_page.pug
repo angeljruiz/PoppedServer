@@ -1,8 +1,7 @@
 mixin head(title)
     title= title
     meta(charset="utf-8")
-    meta(name='viewport' content='width=device-width, initial-scale=1')
-    link(href='css/reset.css' rel='stylesheet')
+    meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
     link(href='css/bootstrap.min.css' rel='stylesheet')
     link(href='css/font-awesome.min.css' rel='stylesheet')
     link(href='css/style.css' rel='stylesheet')
@@ -11,8 +10,8 @@ mixin head(title)
     link(rel="icon" href="media/icon.ico")
 
 mixin header(title)
-    .jumbotron.text-center
-        h1= title
+  .jumbotron.text-center
+    h1= title
         
 mixin particles()
   script.
@@ -23,24 +22,26 @@ mixin particles()
 mixin footer()
   .footer
     p.text-center.top-10 &copy 2017 Angel Ruiz-Bates
-  +icons
+    +icons
 
 mixin navvy(index)
     -
-        var pages = [ 'Home', 'Users', 'Article List', 'About'];
-        var urls = [ '/', '/list', '/articlelist', '/about' ];
-    nav(class='navbar navbar-default')
-        ul(class='nav nav-pills')
-            each i in [0, 1, 2, 3]
-                li(class={active: index == i}): a(href=urls[i])= pages[i]
-            if(loggedIn)
-                li(class='pull-right'): a(href='/logout') Logout
-                
+        var pages = [ 'Home', 'Articles', 'About'];
+        var urls = [ '/', '/articlelist', '/about' ];  
+    nav(class='navbar navbar-toggleable-md navbar-inverse bg-faded mb-4 justify-content-end')
+      a.navbar-item.mr-auto.ml-2(href='#')
+        img(src='/media/icon.png' width=48 height=48)    
+      each i in [0, 1, 2]
+          li.nav-link: a(href=urls[i])= pages[i]
+      if(loggedIn)
+          li.nav-link: a(href='/logout')
+            i.fa.fa-sign-out.fa-lg
+              
 mixin newNav(index)
   -
-    var pages = [ 'Home', 'Users', 'Path Finder', 'About'];
-    var urls = [ '/', '/list', '/game', '/about' ];
-  nav(class='navbar navbar-default navbar-fixed-top')
+    var pages = [ 'Home', 'Users', 'Article List', 'About'];
+    var urls = [ '/', '/list', '/articlelist', '/about' ];
+  nav(class='nav navbar-nav navbar-right')
       ul(class='nav nav-pills')
           each i in [0, 1, 2, 3]
               li(class={active: index == i}): a(href=urls[i])= pages[i]
@@ -75,12 +76,12 @@ mixin initFb()
     }
 
 mixin icons
-  a(href= 'https://github.com/aruizbates')
+  a(href= 'https://github.com/angeljruiz')
       i.fa-3x.fa.fa-github.gitcon
   //- a(href='https://www.linkedin.com/in/ruizaj')
       i.fa-3x.fa.fa-linkedin.linkcon
 mixin row(size, offset)
     .row
-        div(class='col-md-' + size class=offset==0? '' : 'col-md-offset-' + offset)
+        div(class='col-md-' + size class=offset==0? '' : 'offset-md-' + offset)
             if block
                 block

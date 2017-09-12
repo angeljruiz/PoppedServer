@@ -34,7 +34,7 @@ app.use(passport.session());
 app.use(flash());
 app.set('view engine', 'pug');
 app.set('views', './views');
-// app.locals.pretty = true;
+app.locals.pretty = true;
 
 require('./scripts/routes.js')(app, db, passport);
 

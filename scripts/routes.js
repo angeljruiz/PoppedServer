@@ -78,7 +78,7 @@ module.exports = (app, db, passport) => {
           console.log('error');
           return;
         }
-        media = data;
+        media = data
 
         fs.readFile(req.files.thumbnail[0].path, (err, data2) => {
           if (err) {
@@ -100,6 +100,12 @@ module.exports = (app, db, passport) => {
   app.get('/articlelist', (req, res) => {
     db.listarticles( articles => {
       res.render('articlelist', {articles: articles});
+    });
+  });
+
+  app.get('/article/media/:id', (req, res) => {
+    db.loadArticleImages({ id: req.params.id, media: true }, image => {
+      console.log(image);
     });
   });
 

@@ -1,54 +1,45 @@
-doctype html
-html
-    head
-        include ../includes/default_page.pug
-        +head('Profile')
+extends ../includes/layout.pug
 
-    body(style='background-color: gray')
-        +particles
-        div(id='particles')
-        .fluidcontainer(id="main")
-            +header(localUsername)
-            - var index = owner ? 0 : 1
-            +navvy(index)
-            form(action="/delete/" + localId method='GET' id='delete')
-            form(action="saveMessage?" + localId method='POST' id='save')
-                input(type='hidden' id='id' name='id' value=localId)
+append resources
+  title= localUsername
+  form(action="/delete/" + localId method='GET' id='delete')
+  form(action="saveMessage?" + localId method='POST' id='save')
+  
+append body
+  +header(localUsername)
+  +navvy(1)
+  - var index = owner ? 0 : 1
 
-            .row
-                .col-md-5.col-md-offset-1
-                    .panel.panel-default.user-panel
-                        br
-                        .btn-toolbar.left-10
-                            if (true)
-                              input.left-20(type='submit' class='btn btn-danger' value='Delete' form='delete')
-                        br
-                        .row
-                            .col-md-1.col-md-offset-3
-                                img(src='/photo/' + localId)
-                            .col-md-8.left-10.bottom-10
-                                h2='Username '
-                                    span(class='label label-primary left-10')= localUsername
-                .col-md-5.col-xs-12
-                    if(owner || messages.length > 0)
-                        .panel.panel-default.messages-panel
-                          if (owner)
-                            .form-group
-                              .row
-                                .col-xs-10.col-xs-offset-1.col-md-8
-                                  textarea.form-control.messages-box(rows=5 form='save' name='message')
-                                .col-xs-1.col-xs-offset-8.col-md-offset-8
-                                  input.submit-messages(type='submit' class='btn btn-info' value='Submit' form='save')
-                            br
-                          ul.list-group
-                              each message in messages
-                                  li.list-group-item.text-center.message(@mouseover='hover')= message.text
-                                    a
-                                      button.message-delete.btn.btn-danger.btn-sm.pull-right(@click="deleteMessage(message.id)") Delete
-                br
-                br
-                br
-                br
-              
-        script(src='vue/vue.js')
-        +footer
+  input(type='hidden' id='id' name='id' value=localId)
+
+  .row
+      .col-md-5.offset-md-1
+          .card.user-panel
+              br
+              .left-10
+                  if (true)
+                    input(type='submit' class='btn btn-danger' value='Delete' form='delete')
+              br
+              .row
+                  .col-md-1.offset-md-1.mb-3
+                      img(src='/photo/' + localId)
+                  .col-md-8
+                      h2='Username '
+                          span.badge.badge-primary= localUsername
+      .col-md-5.col-xs-12
+          if(owner || messages.length > 0)
+              .card.messages-panel
+                if (owner)
+                  .form-group
+                    .row
+                      .col-xs-10.offset-xs-1.col-md-8.offset-md-1
+                        textarea.form-control.messages-box(rows=5 form='save' name='message')
+                      .col-xs-1.offset-xs-8.offset-md-8
+                        input.submit-messages(type='submit' class='btn btn-info' value='Submit' form='save')
+                  br
+                ul.list-group
+                    each message in messages
+                        li.list-group-item.text-center.message(@mouseover='hover')= message.text
+                          a
+                            button.message-delete.btn.btn-danger.btn-sm.pull-right(@click="deleteMessage(message.id)") Delete
+    

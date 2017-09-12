@@ -100,10 +100,19 @@ class Database {
           if(err)
               return console.error('error running query', err);
           for (let i=0; i<res.rows.length; i++) {
-            articles.push({ title: res.rows[i].title, desc: res.rows[i].description, thumbnail: res.rows[i].thumbnail });
+            articles.push({ title: res.rows[i].title, desc: res.rows[i].description, thumbnail: new Buffer(res.rows[i].thumbnail).toString('base64'), id: res.rows[i].id });
           }
           return fn(articles);
       });
+    }
+    loadArticleImages(input, fn) {
+      pool.query('SELECT (' + input.media? 'media':'thumbnail' + ') FROM articles WHERE id = ($1)', [input.id], (err, res) => {
+        if(err)
+            return console.error('error running query', err);
+        console.log(res.rows);
+        if (fn)
+          fn();
+      })
     }
 }
 

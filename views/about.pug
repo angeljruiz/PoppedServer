@@ -1,17 +1,13 @@
-doctype html
-html
-    head
-        include ../includes/default_page.pug
-        +head('About')
-    body(style='background-color: gray')
-      +particles
-      div(id='particles')
-      .fluidcontainer
-          +header('Info')
-          +navvy(3)
-          .panel.panel-default
-              .panel-body
-                  h1.text-left.left-10 About this site
-                  p.indent Proof of concept site showing login system, messaging/post system, user authentication, and dynamic webpages. Powered by Node.js, Express, PostgreSQL, Pug, and Vue.
-                  //- p.indent Particle system courteous of #[a(href='https://github.com/VincentGarreau/') Vincent Garreau].
-          +footer
+extends ../includes/layout.pug
+
+append resources
+  title About
+  
+append body
+  +header('About')
+  +navvy(1)
+  .card
+    .card-block
+      h1 About this site
+      p.indent.card-text Proof of concept site showing login system, messaging/post system, user authentication, and dynamic webpages. Powered by Node.js, Express, PostgreSQL, Pug, and Vue.
+      //- p.indent Particle system courteous of #[a(href='https://github.com/VincentGarreau/') Vincent Garreau].

@@ -1,31 +1,30 @@
-doctype html
-html
-    head
-        include ../includes/default_page.pug
-        +head('Signup')
-    body(style='background-color: gray')
-        +particles
-        div(id='particles')
-        form(action='/new' method='POST' id='signup')
-        .fluidcontainer
-            +header('Signup')
-            +navvy(0)
-            .panel.panel-default.login-panel.col-md-6.col-md-offset-3
-              .panel-body
-                br
-                if (flash.taken || flash.incorrect)
-                  .alert.alert-danger.text-center
-                    = flash.taken || flash.incorrect
-                .form-group
-                    +row(6, 3)
-                        input.form-control(type='text' name='username' placeholder='Username' form='signup')
-                        br
-                    +row(6, 3)
-                        input.form-control(type='text' name='email' placeholder='Email' form='signup')
-                        br
-                    +row(6, 3)
-                        input.form-control(type='password' name='password' placeholder='Password' form='signup')
-                        br
-                    +row(4, 4)
-                        input.form-control(type='submit' class='btn btn-primary' value='Register' form='signup')
-                br
+extends ../includes/layout.pug
+
+append resources
+  title Signup
+  form(action='/new' method='POST' id='signup')
+append body
+  +header('Signup')
+  +navvy(0)
+  .card.col-md-6.offset-md-3
+    .card-block
+      if (flash.taken || flash.incorrect)
+        .alert.alert-danger.text-center
+          = flash.taken || flash.incorrect
+      .form-group
+          +row(7, 2)
+              .input-group
+                .input-group-addon Username
+                input.form-control(type='text' name='username' form='signup')
+      .form-group
+          +row(7, 2)
+            .input-group
+              .input-group-addon Email
+              input.form-control(type='text' name='email' form='signup')
+      .form-group
+          +row(7, 2)
+            .input-group
+              .input-group-addon Password
+              input.form-control(type='password' name='password' form='signup')
+      +row(4, 4)
+          input.form-control(type='submit' class='btn btn-primary' value='Register' form='signup')

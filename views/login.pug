@@ -1,45 +1,36 @@
-doctype html
-html
-    head
-        include ../includes/default_page.pug
-        link(href='css/reset.css' rel='stylesheet')
-        +head('Login')
-    body(style='background-color: gray')
-        +particles
-        +initFb()
-        //.fb-like(data-share="true" data-width="450" data-show-faces="true" style='position: fixed; bottom: 0; left: 77%')
-        #fb-root
-        form(action='/new' method='POST' id='signup')
-        form(action='/login' method='POST' id='login')
-        div(id='particles')
-        .fluidcontainer
-            +header('Login')
-            +navvy(0)
+extends ../includes/layout.pug
+
+append resources
+  title Login
+  form(action='/new' method='POST' id='signup')
+  form(action='/login' method='POST' id='login')
+    
+append body
+  +header('Login')
+  +navvy(0)
+  .row
+    .card.col-md-6.offset-md-3
+          br
+          if (flash.incorrect || flash.notLogged)
+            .alert.alert-danger.text-center
+              = flash.incorrect || flash.notLogged
+          .form-group
             .row
-              .panel.panel-default.login-panel.col-md-6.col-md-offset-3
-                  .panel-body
-                      br
-                      if (flash.incorrect || flash.notLogged)
-                        .alert.alert-danger.text-center
-                          = flash.incorrect || flash.notLogged
-                      .form-group
-                        .row
-                          .col-md-6.col-md-offset-3
-                            input.form-control(type='text' name='username' placeholder='Username' form='login')
-                            br
-                        .row
-                          .col-md-6.col-md-offset-3
-                            input.form-control(type='password' name='password' placeholder='Password' form='login')
-                            br
-                        .row
-                            .col-md-4.col-md-offset-2
-                                input.form-control.margin-bottom-10(type='submit' class='btn btn-primary' value='Login' form='login')
-                                //a(href='/auth/facebook') Login with Facebook
-                            .col-md-4
-                                a.form-control(class='btn btn-primary' href='/signup') Register
-                        if (false) 
-                          .row
-                            .col-md-4.col-md-offset-3
-                              .fb-login-button(data-max-rows="1" data-size="medium" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="true")
-                        br
-        +footer
+              .col-md-6.offset-md-3
+                input.form-control(type='text' name='username' placeholder='Username' form='login')
+                br
+            .row
+              .col-md-6.offset-md-3
+                input.form-control(type='password' name='password' placeholder='Password' form='login')
+                br
+            .row
+                .col-md-4.offset-md-2
+                    input.form-control.margin-bottom-10(type='submit' class='btn btn-primary' value='Login' form='login')
+                    //a(href='/auth/facebook') Login with Facebook
+                .col-md-4
+                    a.form-control(class='btn btn-primary' href='/signup') Register
+            if (false) 
+              .row
+                .col-md-4.offset-md-3
+                  .fb-login-button(data-max-rows="1" data-size="medium" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="true")
+            br
