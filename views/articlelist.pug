@@ -4,18 +4,15 @@ append resources
   title Articles
   
 append body
-  +header('Articles')
-  +navvy(1)
   .row
     .col-md-10.offset-md-1
       .card
           h1.card-header Articles
           ul.list-group
           each article in articles
-            li.articlelist.list-group-item
-              a(href='/article?id=' + article.id)
-                img(src='data:image/png;base64,' + article.thumbnail width=64 height=64) 
-              strong &nbsp;
-                = article.title
-              p &nbsp
-              .text-center= article.desc
+            .card.article
+              a(href='/article/' + article.id)
+                .card-block
+                  img(src='/article/thumbnail/' + article.id width=64 height=64) 
+                  strong.ml-2= article.title
+                  .text-center.mb-3= article.desc

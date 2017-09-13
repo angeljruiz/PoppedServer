@@ -99,13 +99,27 @@ module.exports = (app, db, passport) => {
 
   app.get('/articlelist', (req, res) => {
     db.listarticles( articles => {
-      res.render('articlelist', {articles: articles});
+      res.render('articlelist', {articles: articles, loggedIn: req.isAuthenticated()});
     });
   });
 
+  app.get('/article/:id', (req, res) => {
+    db.loadArticle(req.params.id, data => {
+      res.render('article', { title: data.title, body: data.body, id: req.params.id });
+    })
+  });
+
   app.get('/article/media/:id', (req, res) => {
-    db.loadArticleImages({ id: req.params.id, media: true }, image => {
-      console.log(image);
+    db.loadArticleImages({ id: req.params.id, media: true }, media => {
+      res.write(media, 'binary');
+      res.end(null, 'binary');
+    });
+  });
+
+  app.get('/article/thumbnail/:id', (req, res) => {
+    db.loadArticleImages({ id: req.params.id, thumbnail: true }, media => {
+      res.write(media, 'binary');
+      res.end(null, 'binary');
     });
   });
 

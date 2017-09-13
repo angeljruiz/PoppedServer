@@ -84,7 +84,6 @@ class Database {
         });
     }
     createart(title, desc, media, thumbnail, data, fn) {
-      console.log(media);
       if (title && desc && media && thumbnail) {
         pool.query('INSERT INTO articles (title, description, media, thumbnail, data) VALUES ($1, $2, $3, $4, $5)', [title, desc, media, thumbnail, data], (err, res) => {
             if(err)
@@ -106,12 +105,28 @@ class Database {
       });
     }
     loadArticleImages(input, fn) {
-      pool.query('SELECT (' + input.media? 'media':'thumbnail' + ') FROM articles WHERE id = ($1)', [input.id], (err, res) => {
+      let ret = (err, res) => {
+        if (!res)
+          return;
+        if (fn) {
+          if (input.thumbnail)
+            fn(res.rows[0].thumbnail);
+          else
+            fn(res.rows[0].media);
+        }
+      }
+      if (input.media)
+        pool.query('SELECT media FROM articles WHERE id = ($1)', [input.id], ret);
+      else
+        pool.query('SELECT thumbnail FROM articles WHERE id = ($1)', [input.id], ret);
+    }
+    loadArticle(id, fn) {
+      let data = 0;
+      pool.query('SELECT title, data FROM articles WHERE id = ($1)', [id], (err, res) => {
         if(err)
             return console.error('error running query', err);
-        console.log(res.rows);
-        if (fn)
-          fn();
+          if (fn)
+            fn({title: res.rows[0].title, body: res.rows[0].data});
       })
     }
 }

@@ -1,17 +1,6 @@
-mixin head(title)
-    title= title
-    meta(charset="utf-8")
-    meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
-    link(href='css/bootstrap.min.css' rel='stylesheet')
-    link(href='css/font-awesome.min.css' rel='stylesheet')
-    link(href='css/style.css' rel='stylesheet')
-    script(src='https://unpkg.com/vue@2.4.1')
-    script(src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js")
-    link(rel="icon" href="media/icon.ico")
-
-mixin header(title)
-  .jumbotron.text-center
-    h1= title
+mixin header()
+  a(href='/')
+    img.micon(src='/media/icon.png' width=128 height=128)
         
 mixin particles()
   script.
@@ -20,17 +9,17 @@ mixin particles()
     });
 
 mixin footer()
-  .footer
-    p.text-center.top-10 &copy 2017 Angel Ruiz-Bates
-    +icons
+  .footer.bg-faded
+    .text-center &copy 2017 Angel Ruiz-Bates
+    //- +icons
 
 mixin navvy(index)
     -
         var pages = [ 'Home', 'Articles', 'About'];
         var urls = [ '/', '/articlelist', '/about' ];  
-    nav(class='navbar navbar-toggleable-md navbar-inverse bg-faded mb-4 justify-content-end')
-      a.navbar-item.mr-auto.ml-2(href='#')
-        img(src='/media/icon.png' width=48 height=48)    
+    nav.navbar.navbar-toggleable-md.navbar-inverse.bg-faded.mb-4.justify-content-end
+      //- a.navbar-item.mr-auto.ml-2.hicon(href='/')
+      //-   img(src='/media/icon.png' width=48 height=48)    
       each i in [0, 1, 2]
           li.nav-link: a(href=urls[i])= pages[i]
       if(loggedIn)

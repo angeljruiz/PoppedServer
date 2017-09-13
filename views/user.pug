@@ -6,8 +6,6 @@ append resources
   form(action="saveMessage?" + localId method='POST' id='save')
   
 append body
-  +header(localUsername)
-  +navvy(1)
   - var index = owner ? 0 : 1
 
   input(type='hidden' id='id' name='id' value=localId)
@@ -15,10 +13,8 @@ append body
   .row
       .col-md-5.offset-md-1
           .card.user-panel
-              br
-              .left-10
-                  if (true)
-                    input(type='submit' class='btn btn-danger' value='Delete' form='delete')
+              if (true)
+                input.ml-auto.mt-2.mr-2(type='submit' class='btn btn-danger' value='Delete' form='delete')
               br
               .row
                   .col-md-1.offset-md-1.mb-3
@@ -39,7 +35,7 @@ append body
                   br
                 ul.list-group
                     each message in messages
-                        li.list-group-item.text-center.message(@mouseover='hover')= message.text
+                        li.list-group-item.message.justify-content-center(@mouseover='hover')= message.text
                           a
-                            button.message-delete.btn.btn-danger.btn-sm.pull-right(@click="deleteMessage(message.id)") Delete
+                            button.message-delete.btn.btn-danger.btn-sm(@click="deleteMessage(message.id)") Delete
     

@@ -4,8 +4,6 @@ append resources
   title Signup
   form(action='/new' method='POST' id='signup')
 append body
-  +header('Signup')
-  +navvy(0)
   .card.col-md-6.offset-md-3
     .card-block
       if (flash.taken || flash.incorrect)
