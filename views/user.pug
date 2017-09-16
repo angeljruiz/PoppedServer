@@ -11,31 +11,33 @@ append body
   input(type='hidden' id='id' name='id' value=localId)
 
   .row
-      .col-md-5.offset-md-1
-          .card.user-panel
+      .col-md-5.ml-auto
+          .card.mb-2
+            .card-body
               if (true)
-                input.ml-auto.mt-2.mr-2(type='submit' class='btn btn-danger' value='Delete' form='delete')
+                input.float-right(type='submit' class='btn btn-danger' value='Delete' form='delete')
               br
-              .row
-                  .col-md-1.offset-md-1.mb-3
-                      img(src='/photo/' + localId)
-                  .col-md-8
-                      h2='Username '
-                          span.badge.badge-primary= localUsername
-      .col-md-5.col-xs-12
+              .row.mt-4
+                  //- .col-1.ml-5.mr-1
+                  img.ml-5(src='/photo/' + localId)
+                  //- .col-8.ml-1
+                  h2.ml-3='Username '
+                      span.badge.badge-primary= localUsername
+      .col-md-5.col-xs-12.mr-auto
           if(owner || messages.length > 0)
-              .card.messages-panel
+              .card
                 if (owner)
                   .form-group
                     .row
-                      .col-xs-10.offset-xs-1.col-md-8.offset-md-1
-                        textarea.form-control.messages-box(rows=5 form='save' name='message')
-                      .col-xs-1.offset-xs-8.offset-md-8
-                        input.submit-messages(type='submit' class='btn btn-info' value='Submit' form='save')
+                      .col-md-8.col-xs-7.ml-5.mx-auto.my-3
+                        textarea.form-control.static(rows=5 form='save' name='message')
+                    .row
+                      .col-7
+                      input.ml-4(type='submit' class='btn btn-info' value='Submit' form='save')
                   br
                 ul.list-group
                     each message in messages
-                        li.list-group-item.message.justify-content-center(@mouseover='hover')= message.text
-                          a
+                        li.list-group-item.message.text-center(@mouseover='hover')= message.text
+                          //a
                             button.message-delete.btn.btn-danger.btn-sm(@click="deleteMessage(message.id)") Delete
     

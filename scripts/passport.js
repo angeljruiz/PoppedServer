@@ -37,16 +37,17 @@ module.exports = function(passport) {
         });
     }));
     passport.use('login', new LocalStrategy( { passReqToCallback: true }, (req, username, password, done) => {
-        new User({ localUsername: username }, (err, user) => {
-            if(err)
-                return done(err);
-            if(!user || !user.validPassword(password)) {
-                req.res.flash('incorrect', 'Invalid username or password');
-                return done(null, false);
-            }
+      console.log(username);
+      new User({ localUsername: username }, (err, user) => {
+          if(err)
+              return done(err);
+          if(!user || !user.validPassword(password)) {
+              req.res.flash('incorrect', 'Invalid username or password');
+              return done(null, false);
+          }
 
-            return done(null, user);
-        });
+          return done(null, user);
+      });
 
     }));
     passport.use(new FacebookStrategy({

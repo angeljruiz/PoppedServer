@@ -7,28 +7,35 @@ append resources
     
 append body
   .row
-    .card.col-md-6.offset-md-3
-          br
+    .col-md-6.mx-auto
+      .card
+        .card-header.text-center
+          i.fa.fa-sign-in.fa-lg.mr-1
+          h4.d-inline-block Login
+        .card-body
           if (flash.incorrect || flash.notLogged)
             .alert.alert-danger.text-center
               = flash.incorrect || flash.notLogged
           .form-group
-            .row
-              .col-md-6.offset-md-3
-                input.form-control(type='text' name='username' placeholder='Username' form='login')
-                br
-            .row
-              .col-md-6.offset-md-3
-                input.form-control(type='password' name='password' placeholder='Password' form='login')
-                br
-            .row
-                .col-md-4.offset-md-2
-                    input.form-control.margin-bottom-10(type='submit' class='btn btn-primary' value='Login' form='login')
-                    //a(href='/auth/facebook') Login with Facebook
-                .col-md-4
-                    a.form-control(class='btn btn-primary' href='/signup') Register
+            .row.justify-content-center
+              .col-md-6
+                .input-group
+                  .input-group-addon Username
+                  input.form-control(type='text' name='username' form='login')
+          .form-group
+            .row.justify-content-center
+              .col-md-6
+                .input-group
+                  .input-group-addon Password
+                  input.form-control(type='password' name='password' form='login')
+          .form-group
+            .row.justify-content-center
+              .col-md-4
+                  input.form-control.btn.btn-primary.mb-2(type='submit' value='Login' form='login')
+                  //a(href='/auth/facebook') Login with Facebook
+              .col-md-4
+                  a.form-control.btn.btn-primary(href='/signup') Register
             if (false) 
               .row
                 .col-md-4.offset-md-3
                   .fb-login-button(data-max-rows="1" data-size="medium" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="true")
-            br

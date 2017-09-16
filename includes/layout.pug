@@ -4,10 +4,10 @@ html
     block resources
       meta(charset="utf-8")
       meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
-      link(href='http://localhost/css/bootstrap.min.css' rel='stylesheet')
-      link(href='http://localhost/css/font-awesome.min.css' rel='stylesheet')
-      link(href='http://localhost/css/style.css' rel='stylesheet')
-      link(rel="icon" href="http://localhost/media/icon.ico")
+      link(href='../css/bootstrap.min.css' rel='stylesheet')
+      link(href='../css/font-awesome.min.css' rel='stylesheet')
+      link(href='../css/style.css' rel='stylesheet')
+      link(rel="icon" href="../media/icon.ico")
       include ../includes/default_page
   body(style='background-color: #337ab7')
     +header()
@@ -15,3 +15,6 @@ html
     .container-fluid
       block body
     +footer()
+    script(src='https://code.jquery.com/jquery-3.2.1.slim.min.js')
+    script(src='../js/popper.min.js')
+    script(src='../js/bootstrap.min.js')

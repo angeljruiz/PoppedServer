@@ -4,8 +4,9 @@ append resources
   title Users
   
 append body
-  +row(8, 2)
-    ul.list-group.list-group-flush
-      each user, index in users
-        li.list-group-item
-          a.form-control(href='/user?id=' + user.id  class='btn btn-link')= user.name
+  .row
+    .col-md-8.col-sm-12.mx-auto
+      ul.list-group.list-group-flush
+        each user, index in users
+          li.list-group-item
+            a.form-control(href='/user?id=' + user.id  class='btn btn-link')= user.name

@@ -9,33 +9,25 @@ mixin particles()
     });
 
 mixin footer()
-  .footer.bg-faded
+  .footer.bg-light
     .text-center &copy 2017 Angel Ruiz-Bates
     //- +icons
 
 mixin navvy(index)
-    -
-        var pages = [ 'Home', 'Articles', 'About'];
-        var urls = [ '/', '/articlelist', '/about' ];  
-    nav.navbar.navbar-toggleable-md.navbar-inverse.bg-faded.mb-4.justify-content-end
-      //- a.navbar-item.mr-auto.ml-2.hicon(href='/')
-      //-   img(src='/media/icon.png' width=48 height=48)    
-      each i in [0, 1, 2]
-          li.nav-link: a(href=urls[i])= pages[i]
-      if(loggedIn)
-          li.nav-link: a(href='/logout')
-            i.fa.fa-sign-out.fa-lg
-              
-mixin newNav(index)
   -
-    var pages = [ 'Home', 'Users', 'Article List', 'About'];
-    var urls = [ '/', '/list', '/articlelist', '/about' ];
-  nav(class='nav navbar-nav navbar-right')
-      ul(class='nav nav-pills')
-          each i in [0, 1, 2, 3]
-              li(class={active: index == i}): a(href=urls[i])= pages[i]
-          if(loggedIn)
-              li(class='pull-right'): a(href='/logout') Logout
+      var pages = [ 'Home', 'Articles', 'About'];
+      var urls = [ '/', '/articlelist', '/about' ];  
+  nav.navbar.navbar-expand-xl.bg-light.mb-4.navbar-light
+    //- .navbar-brand.mr-auto Testr
+    button.navbar-toggler.ml-auto.btn(type='button' data-toggle='collapse' data-target='#navcollapse')
+      span.navbar-toggler-icon
+    #navcollapse.collapse.navbar-collapse.justify-content-end
+      ul.navbar-nav   
+        each i in [0, 1, 2]
+          li.nav-item: a.nav-link(href=urls[i])= pages[i]
+        if(loggedIn)
+          li.nav-item: a.nav-link(href='/logout')
+            i.fa.fa-sign-out.fa-lg
                 
 mixin nav-links()
   li 
@@ -47,23 +39,21 @@ mixin nav-links()
   li 
     a(href="") Nav 3
 mixin initFb()
+  #fb-root
   script.
-    window.fbAsyncInit = function() {
-      FB.init({
-        appId      : '124609491488258',
-        xfbml      : true,
-        version    : 'v2.10'
-      });
-      FB.AppEvents.logPageView();
-    };
+    (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10&appId=124609491488258";
+    fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+    
+mixin fbComments()
+  .fb-comments(data-href=pager.path data-numposts="5")
 
-    var js, fjs = document.getElementsByTagName('script')[0];
-    if (!document.getElementById('facebook-jssdk')) {
-      js = document.createElement('script'); js.id = 'facebook-jssdk';
-      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10&appId=124609491488258";
-      fjs.parentNode.insertBefore(js, fjs);
-    }
-
+mixin shareThis()
+  script(type="text/javascript" src="//platform-api.sharethis.com/js/sharethis.js#property=59b99f6524814000110af347&product=inline-share-buttons")
 mixin icons
   a(href= 'https://github.com/angeljruiz')
       i.fa-3x.fa.fa-github.gitcon

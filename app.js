@@ -36,17 +36,17 @@ app.set('view engine', 'pug');
 app.set('views', './views');
 app.locals.pretty = true;
 
+require('./scripts/utilities.js')(app, db, passport);
 require('./scripts/routes.js')(app, db, passport);
 
 var autoViews = {};
 
 app.use( (req, res, next) => {
   var path = req.path.toLowerCase();
-
   if (autoViews[path]) return res.render(autoViews[path]);
   if (fs.existsSync(__dirname + '/views' + path + '.pug')) {
     autoViews[path] = path.replace(/^\//, '');
-    return res.render(autoViews[path]);
+    return res.render(autoViews[path], req.pager);
   }
   next();
 });

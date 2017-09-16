@@ -2,16 +2,24 @@ extends ../includes/layout.pug
 
 append resources
   title Article
+  //- +initFb
+  +shareThis
   
 append body
+  +initFb
   .row
     .col-md-12
-      .card
-        h1.text-center= title
-        video.main-media(width='320' height='320' controls)
+      .card.justify-content-center
+        h2.mt-2.text-center= title
+        video.mx-auto(width='320' height='320' controls)
           source(src='/article/media/' + id)
         //- .text-center.figure-caption Test video
-        hr
-        .card-block
+        .card-body
           != body
-      
+          br
+          br
+          .sharethis-inline-share-buttons
+          //- .ml-auto
+          .text-center
+            +fbComments
+  
