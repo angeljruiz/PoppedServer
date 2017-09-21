@@ -52,7 +52,7 @@ module.exports = (app, db, passport) => {
 
   app.get('/article/:id', (req, res) => {
     db.loadArticle(req.params.id, data => {
-      res.render('article', { title: data.title, body: data.body, id: req.params.id, loggedIn: req.isAuthenticated(), pager: pager });
+      res.render('article', { title: data.title, body: data.body, id: req.params.id, loggedIn: req.isAuthenticated(), description: data.description, pager: pager });
     })
   });
 

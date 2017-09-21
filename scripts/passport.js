@@ -37,7 +37,6 @@ module.exports = function(passport) {
         });
     }));
     passport.use('login', new LocalStrategy( { passReqToCallback: true }, (req, username, password, done) => {
-      console.log(username);
       new User({ localUsername: username }, (err, user) => {
           if(err)
               return done(err);

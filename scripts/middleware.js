@@ -18,5 +18,24 @@ module.exports = {
         return res.redirect('/signup');
     }
     return next();
+  },
+
+  async: generator => {
+    let iterator = generator();
+
+    function handle(iteratorResult) {
+      if (iteratorResult.done) { return; }
+
+      const iteratorValue = iteratorResult.value;
+
+      if (iteratorValue instanceof Promise) {
+        iteratorValue.then(res => handle(iterator.next(res))).catch(err => iterator.throw(err));
+      }
+    }
+    try {
+      handle(iterator.next());
+    } catch(e) {
+      iterator.throw(e);
+    }
   }
 }

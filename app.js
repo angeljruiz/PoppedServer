@@ -40,10 +40,14 @@ require('./scripts/utilities.js')(app, db, passport);
 require('./scripts/routes.js')(app, db, passport);
 
 var autoViews = {};
+const reg = /(login|signup)/;
+
 
 app.use( (req, res, next) => {
-  var path = req.path.toLowerCase();
-  if (autoViews[path]) return res.render(autoViews[path]);
+  let path = req.path.toLowerCase();
+  if (reg.test(path) && req.isAuthenticated())
+    return res.redirect('/');
+  if (autoViews[path]) return res.render(autoViews[path], req.pager);
   if (fs.existsSync(__dirname + '/views' + path + '.pug')) {
     autoViews[path] = path.replace(/^\//, '');
     return res.render(autoViews[path], req.pager);

@@ -3,6 +3,7 @@ var upload = multer({ dest: 'uploads/' });
 var path = require('path');
 var fs = require('fs');
 var mw = require('./middleware.js');
+var User = require('../models/user.js');
 
 module.exports = (app, db, passport) => {
 
@@ -52,6 +53,13 @@ module.exports = (app, db, passport) => {
     });
   });
 
+  app.get('/article/:id/thumbnail.png', (req, res) => {
+    db.loadArticleImages({ id: req.params.id, thumbnail: true }, media => {
+      res.write(media, 'binary');
+      res.end(null, 'binary');
+    });
+  });
+
   app.post('/new', mw.validateInfo, passport.authenticate('signup', { session: true, failureRedirect: '/signup' }), (req, res) => {
     new User({ localUsername: req.user.localUsername }, (err, user) => {
       req.login(user, function(err) {
@@ -81,9 +89,7 @@ module.exports = (app, db, passport) => {
         req.user.loggedIn = true;
         req.user.owner = true;
         req.user.saveMessage(req.body.message, () => {
-          req.user.loadMessages( () => {
-            res.render('user', req.user);
-          });
+          res.redirect('/');
         });
       }
   });

@@ -3,7 +3,7 @@ extends ../includes/layout.pug
 append resources
   title= localUsername
   form(action="/delete/" + localId method='GET' id='delete')
-  form(action="saveMessage?" + localId method='POST' id='save')
+  form(action="saveMessage" method='POST' id='save')
   
 append body
   - var index = owner ? 0 : 1
@@ -14,7 +14,7 @@ append body
       .col-md-5.ml-auto
           .card.mb-2
             .card-body
-              if (true)
+              if (owner)
                 input.float-right(type='submit' class='btn btn-danger' value='Delete' form='delete')
               br
               .row.mt-4

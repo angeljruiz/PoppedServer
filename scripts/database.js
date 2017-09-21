@@ -46,6 +46,15 @@ class Database {
         }
 
     }
+    loadPassword(id) {
+      return new Promise( (resolve, reject) => {
+        pool.query('SELECT password FROM users WHERE id = ($1)', [id], (err, res) => {
+          if (err)
+            return reject(err);
+          resolve(res.rows[0].password);
+        });
+      });
+    }
     deleteUser(id, fn) {
         pool.query('DELETE FROM users WHERE id = ($1)', [id], (err, res) => {
             if(err)
@@ -122,11 +131,13 @@ class Database {
     }
     loadArticle(id, fn) {
       let data = 0;
-      pool.query('SELECT title, data FROM articles WHERE id = ($1)', [id], (err, res) => {
+      pool.query('SELECT title, data, description FROM articles WHERE id = ($1)', [id], (err, res) => {
         if(err)
             return console.error('error running query', err);
-          if (fn)
-            fn({title: res.rows[0].title, body: res.rows[0].data});
+          if (fn && res.rows)
+            fn({title: res.rows[0].title, body: res.rows[0].data, description: res.rows[0].description});
+          else
+            fn();
       })
     }
 }

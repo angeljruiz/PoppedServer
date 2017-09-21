@@ -10,20 +10,21 @@ mixin particles()
 
 mixin footer()
   .footer.bg-light
+    +icons
+    a.float-right.mr-2(href='/privatepolicy') Privacy
     .text-center &copy 2017 Angel Ruiz-Bates
-    //- +icons
 
 mixin navvy(index)
   -
-      var pages = [ 'Home', 'Articles', 'About'];
-      var urls = [ '/', '/articlelist', '/about' ];  
+      var pages = [ 'Home', 'Users', 'Articles', 'About'];
+      var urls = [ '/', '/list', '/articlelist', '/about' ];  
   nav.navbar.navbar-expand-xl.bg-light.mb-4.navbar-light
     //- .navbar-brand.mr-auto Testr
     button.navbar-toggler.ml-auto.btn(type='button' data-toggle='collapse' data-target='#navcollapse')
       span.navbar-toggler-icon
     #navcollapse.collapse.navbar-collapse.justify-content-end
       ul.navbar-nav   
-        each i in [0, 1, 2]
+        each i in [0, 1, 2, 3]
           li.nav-item: a.nav-link(href=urls[i])= pages[i]
         if(loggedIn)
           li.nav-item: a.nav-link(href='/logout')
@@ -55,7 +56,7 @@ mixin fbComments()
 mixin shareThis()
   script(type="text/javascript" src="//platform-api.sharethis.com/js/sharethis.js#property=59b99f6524814000110af347&product=inline-share-buttons")
 mixin icons
-  a(href= 'https://github.com/angeljruiz')
+  a.float-left.ml-2(href= 'https://github.com/angeljruiz')
       i.fa-3x.fa.fa-github.gitcon
   //- a(href='https://www.linkedin.com/in/ruizaj')
       i.fa-3x.fa.fa-linkedin.linkcon

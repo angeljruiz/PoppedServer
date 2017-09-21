@@ -24,6 +24,7 @@ class User {
     }
     static findOne(id, messages, fn) {
         let user = new User();
+        let lMessages, lPictures = false;
         db.selectUser(id, (error, data) => {
             if(error)
                 return fn(error);
@@ -34,15 +35,11 @@ class User {
                 if(data.pp) {
                     user.profilePicture = data.pp;
                 } else {
-                    user.loadPicture('../media/df.png', () => {
-                        if(messages)
-                            user.loadMessages( () => {
-                                return fn(false, user);
-                            });
-                        else
-                            return fn(false, user);
-                    });
+                  lPictures = 'media/df.png';
                 }
+                user.loadData({ path: lPictures, messages: messages }).then( () => {
+                  return fn(null, user);
+                });
             } else {
                 return fn(false, false);
             }
@@ -57,21 +54,31 @@ class User {
         this.owner = false;
       return this;
     }
-    loadPicture(pic, fn) {
+    loadData(input, fn) {
+      let stack = [];
+      if (input.path)
+        stack.push(this.loadPicture(input.path));
+      if (input.messages)
+        stack.push(this.loadMessages());
+      return Promise.all(stack, fn);
+    }
+    loadPicture(pic) {
+      return new Promise( (resolve, reject) => {
         fs.readFile(pic, (err, data) => {
             if(err)
-                return fn(err);
+                return reject(err);
             this.profilePicture = data;
-            if(fn)
-                fn();
+            resolve();
         });
+      });
     }
-    loadMessages(fn) {
+    loadMessages() {
+      return new Promise( (resolve, reject) => {
         db.loadMessages(this.localId, (data) => {
             this.messages = data;
-            if(fn)
-                return fn();
+            resolve();
         });
+      });
     }
     saveMessage(message, fn) {
         db.saveMessage(this.localId, message, fn);

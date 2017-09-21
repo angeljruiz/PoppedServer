@@ -5,7 +5,7 @@ class Pager {
   }
 
   update(req) {
-    this.path = req.hostname + req.path;
+    this.path = 'angel.ddns.net' + req.path;
     if (req.isAuthenticated())
       this.loggedIn = true;
     else

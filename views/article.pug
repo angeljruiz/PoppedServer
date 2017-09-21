@@ -1,10 +1,16 @@
 extends ../includes/layout.pug
 
 append resources
-  title Article
+  title= title
   //- +initFb
   +shareThis
-  
+  meta(property="og:url"                content='http://' + pager.path)
+  meta(property="og:type"               content="article")
+  meta(property="og:title"              content=title)
+  meta(property="og:description"        content=description)
+  meta(property="og:image"              content='http://bates.ddns.net/article/' + id +'/thumbnail.png')
+  meta(property="fb:app_id" content="124609491488258")
+    
 append body
   +initFb
   .row
@@ -13,13 +19,11 @@ append body
         h2.mt-2.text-center= title
         video.mx-auto(width='320' height='320' controls)
           source(src='/article/media/' + id)
-        //- .text-center.figure-caption Test video
         .card-body
           != body
           br
           br
           .sharethis-inline-share-buttons
-          //- .ml-auto
           .text-center
             +fbComments
   
