@@ -115,6 +115,8 @@ class Database {
     }
     loadArticleImages(input, fn) {
       let ret = (err, res) => {
+        if (typeof res === 'undefined')
+          return;
         if (!res)
           return;
         if (fn) {
@@ -134,7 +136,7 @@ class Database {
       pool.query('SELECT title, data, description FROM articles WHERE id = ($1)', [id], (err, res) => {
         if(err)
             return console.error('error running query', err);
-          if (fn && res.rows)
+          if (fn && res.rows[0])
             fn({title: res.rows[0].title, body: res.rows[0].data, description: res.rows[0].description});
           else
             fn();

@@ -5,13 +5,12 @@ class Pager {
   }
 
   update(req) {
-    this.path = 'angel.ddns.net' + req.path;
+    this.path = 'clickwithit.us' + req.path;
     if (req.isAuthenticated())
       this.loggedIn = true;
     else
       this.loggedIn = false;
     if (typeof req.user !== 'undefined') {
-      this.user = req.user;
       if (req.query.id === req.user.localId)
         this.owner = true;
       else
@@ -21,6 +20,8 @@ class Pager {
     }
     if (req.path === '/')
       this.owner = true;
+    for (let prop in this)
+      req.res.locals[prop] = this[prop];
   }
 }
 

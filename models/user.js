@@ -19,7 +19,7 @@ class User {
         } else if (input.localId) {
           this.localId = input.localId;
         }
-        return User.findOne(this, this.messages, fn);
+        return User.findOne(this, input.messages || false, fn);
       }
     }
     static findOne(id, messages, fn) {

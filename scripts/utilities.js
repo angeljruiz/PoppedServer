@@ -7,6 +7,11 @@ var User = require('../models/user.js');
 
 module.exports = (app, db, passport) => {
 
+  app.use( (req, res, next) => {
+    res.locals.showTests = app.get('env') !== 'production' && req.query.test === '1';
+    next();
+  });
+
   app.get('/photo/:id', mw.isLoggedOn, (req, res) => {
     res.sendFile(path.resolve(__dirname, '../media/df.png'));
   });
@@ -28,7 +33,6 @@ module.exports = (app, db, passport) => {
             return;
           }
           thumbnail = data2;
-
           db.createart(req.body.title, req.body.description, media, thumbnail, req.body.data, () => {
             fs.unlink(req.files.media[0].path);
             fs.unlink(req.files.thumbnail[0].path);

@@ -8,7 +8,6 @@ module.exports = (app, db, passport) => {
 
   app.use((req, res, next) => {
     pager.update(req);
-    req.pager = pager;
     next();
   });
 
@@ -52,7 +51,10 @@ module.exports = (app, db, passport) => {
 
   app.get('/article/:id', (req, res) => {
     db.loadArticle(req.params.id, data => {
-      res.render('article', { title: data.title, body: data.body, id: req.params.id, loggedIn: req.isAuthenticated(), description: data.description, pager: pager });
+      if (data)
+        res.render('article', { title: data.title, body: data.body, id: req.params.id, loggedIn: req.isAuthenticated(), description: data.description, pager: pager });
+      else
+        res.redirect('/articlelist');
     })
   });
 

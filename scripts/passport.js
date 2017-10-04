@@ -13,7 +13,7 @@ module.exports = function(passport) {
     });
 
     passport.deserializeUser(function(id, done) {
-      new User({ localId: id }, (err, user) => {
+      new User({ localId: id, messages: false }, (err, user) => {
         return done(null, user);
       });
     });

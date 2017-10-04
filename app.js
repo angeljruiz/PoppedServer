@@ -47,10 +47,10 @@ app.use( (req, res, next) => {
   let path = req.path.toLowerCase();
   if (reg.test(path) && req.isAuthenticated())
     return res.redirect('/');
-  if (autoViews[path]) return res.render(autoViews[path], req.pager);
+  if (autoViews[path]) return res.render(autoViews[path]);
   if (fs.existsSync(__dirname + '/views' + path + '.pug')) {
     autoViews[path] = path.replace(/^\//, '');
-    return res.render(autoViews[path], req.pager);
+    return res.render(autoViews[path]);
   }
   next();
 });
