@@ -1,7 +1,7 @@
 "use strict";
 
 var db = require('pg');
-var config = { user: 'postgres', database: 'Reach', password: 'MaMadas321', host: '127.0.0.1', port: 5432, max: 10, idleTimeoutMillis: 30000 };
+var config = { user: 'aruizbates', database: 'Reach', password: 'Kij34!Bn', host: 'reach.cwl91l0woqkj.us-east-2.rds.amazonaws.com', port: 5432, max: 10, idleTimeoutMillis: 30000 };
 var pool = new db.Pool(config);
 
 pool.on('error', function (err) {
@@ -11,6 +11,8 @@ pool.on('error', function (err) {
 module.exports.connect = function (callback) {
     return pool.connect(callback);
 };
+
+
 
 class Database {
     constructor() {
