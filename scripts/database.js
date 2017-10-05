@@ -78,25 +78,41 @@ class Database {
         });
     }
     loadMessages(oid, fn) {
-        this.messages = [];
-        pool.query('SELECT * FROM messages WHERE oid = ($1) ORDER BY id DESC', [oid], (err, res) => {
-            if(err)
-                return console.error('error running query', err);
-            for(let i=0;i<res.rows.length;i++)
-                this.messages.push({ id: res.rows[i].id, text: res.rows[i].message });
-            return fn(this.messages);
-        });
+      this.messages = [];
+      pool.query('SELECT * FROM messages WHERE oid = ($1) ORDER BY id DESC', [oid], (err, res) => {
+        if(err)
+          return console.error('error running query', err);
+        for(let i=0;i<res.rows.length;i++)
+          this.messages.push({ id: res.rows[i].id, text: res.rows[i].message });
+        return fn(this.messages);
+      });
     }
     saveMessage(oid, message, fn) {
-        pool.query('INSERT INTO messages (message, oid) VALUES ($1, $2)', [message, oid], (err, res) => {
-            if(err)
-                return console.error('error running query', err);
-            fn();
-        });
+      pool.query('INSERT INTO messages (message, oid) VALUES ($1, $2)', [message, oid], (err, res) => {
+          if(err)
+              return console.error('error running query', err);
+          fn();
+      });
     }
-    createart(title, desc, media, thumbnail, data, fn) {
-      if (title && desc && media && thumbnail) {
-        pool.query('INSERT INTO articles (title, description, media, thumbnail, data) VALUES ($1, $2, $3, $4, $5)', [title, desc, media, thumbnail, data], (err, res) => {
+    uploadMedia(filename, data, fn) {
+      pool.query('INSERT INTO media (filename, data) VALUES ($1, $2)', [filename, data], (err, res) => {
+        if (err)
+          return console.error('Error running query', err);
+        if (fn)
+          fn();
+      });
+    }
+    loadMedia(filename, fn) {
+      pool.query('SELECT data FROM media WHERE filename = ($1)', [filename], (err, res) => {
+        if (err)
+          return console.error('Error running query', err);
+        if (fn)
+          fn(null, res.rows[0].data);
+      });
+    }
+    createart(title, desc, thumbnail, data, fn) {
+      if (title && desc && thumbnail) {
+        pool.query('INSERT INTO articles (title, description, thumbnail, data) VALUES ($1, $2, $3, $4)', [title, desc, thumbnail, data], (err, res) => {
             if(err)
                 return console.error('error running query', err);
             if (fn)
@@ -110,7 +126,7 @@ class Database {
           if(err)
               return console.error('error running query', err);
           for (let i=0; i<res.rows.length; i++) {
-            articles.push({ title: res.rows[i].title, desc: res.rows[i].description, thumbnail: new Buffer(res.rows[i].thumbnail).toString('base64'), id: res.rows[i].id });
+            articles.push({ title: res.rows[i].title, desc: res.rows[i].description, thumbnail: res.rows[i].thumbnail, id: res.rows[i].id });
           }
           return fn(articles);
       });
@@ -135,11 +151,11 @@ class Database {
     }
     loadArticle(id, fn) {
       let data = 0;
-      pool.query('SELECT title, data, description FROM articles WHERE id = ($1)', [id], (err, res) => {
+      pool.query('SELECT title, data, description, thumbnail FROM articles WHERE id = ($1)', [id], (err, res) => {
         if(err)
             return console.error('error running query', err);
           if (fn && res.rows[0])
-            fn({title: res.rows[0].title, body: res.rows[0].data, description: res.rows[0].description});
+            fn({title: res.rows[0].title, body: res.rows[0].data, description: res.rows[0].description, thumbnail: res.rows[0].thumbnail});
           else
             fn();
       })

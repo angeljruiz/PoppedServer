@@ -16,29 +16,31 @@ module.exports = (app, db, passport) => {
     res.sendFile(path.resolve(__dirname, '../media/df.png'));
   });
 
-  app.post('/createart', upload.fields([{ name: 'media', maxCount: 1 }, { name: 'thumbnail', maxCount: 1 }]), (req, res) => {
-    let media, thumbnail = 0;
+  app.post('/upload', upload.any(), (req, res) => {
     if (req.isAuthenticated() && req.user.localUsername === 'angel') {
-      fs.readFile(req.files.media[0].path, (err, data) => {
-        if (err) {
-          console.log('error');
-          return;
-
-        }
-        media = data
-
-        fs.readFile(req.files.thumbnail[0].path, (err, data2) => {
-          if (err) {
-            console.log('error');
-            return;
-          }
-          thumbnail = data2;
-          db.createart(req.body.title, req.body.description, media, thumbnail, req.body.data, () => {
-            fs.unlink(req.files.media[0].path);
-            fs.unlink(req.files.thumbnail[0].path);
-          });
+      fs.readFile(req.files[0].path, (err, data) => {
+        if (err)
+          return console.error('error reading file', err);
+        db.uploadMedia(req.files[0].originalname, data, () => {
+          fs.unlink(req.files[0].path);
         });
       });
+    }
+  });
+
+  app.get('/media/:id', (req, res) => {
+    db.loadMedia(req.params.id, (err, data) => {
+      if (err)
+        return console.error('error retrieving file', err);
+      res.write(data, 'binary');
+      res.end(null, 'binary');
+    });
+  });
+
+  app.post('/createart', (req, res) => {
+    console.log(req.body);
+    if (req.isAuthenticated() && req.user.localUsername === 'angel') {
+      db.createart(req.body.title, req.body.description, req.body.thumbnail, req.body.data);
     }
     res.redirect('/creator')
   });
@@ -85,7 +87,9 @@ module.exports = (app, db, passport) => {
   app.get('/logout', (req, res) => {
      req.logout();
      req.user = 0;
-     res.redirect('/');
+     setTimeout(() => {
+       res.redirect('/');
+     }, 1000);
   });
 
   app.post('/saveMessage', (req, res) => {

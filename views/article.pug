@@ -4,11 +4,11 @@ append resources
   title= title
   //- +initFb
   +shareThis
-  meta(property="og:url"                content='http://' + pager.path)
+  meta(property="og:url"                content='http://' + path)
   meta(property="og:type"               content="article")
   meta(property="og:title"              content=title)
   meta(property="og:description"        content=description)
-  meta(property="og:image"              content='http://clickwithit.us/article/' + id +'/thumbnail.png')
+  meta(property="og:image"              content='http://clickwithit.us/media/' + thumbnail)
   meta(property="fb:app_id"             content="124609491488258")
     
 append body
@@ -17,8 +17,6 @@ append body
     .col-md-12
       .card.justify-content-center
         h2.mt-2.text-center= title
-        video.mx-auto(width='320' height='320' controls)
-          source(src='/article/media/' + id)
         .card-body
           != body
           br

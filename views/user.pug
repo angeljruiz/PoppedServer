@@ -14,7 +14,7 @@ append body
       .col-md-5.ml-auto
           .card.mb-2
             .card-body
-              if (owner)
+              if (owner || aauth)
                 input.float-right(type='submit' class='btn btn-danger' value='Delete' form='delete')
               br
               .row.mt-4

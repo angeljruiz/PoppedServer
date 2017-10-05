@@ -2,14 +2,24 @@ extends ../includes/layout.pug
 
 append resources
   title Creator
+  script(src='vendor/dropzone.min.js')
+  link(href='vendor/dropzone.min.css' rel='stylesheet')
   
 append body
+  .row
+    .col-md-8.mx-auto
+      form.dropzone#upload-zone(action='/upload' method='POST')
+      script.
+        Dropzone.options.uploadZone = {
+          paramName: 'media'
+        }
+      br
   .row
     .col-md-10.mx-auto
       .card
           .card-body
             .form-group
-              form(action='/createart' method='POST' enctype="multipart/form-data")
+              form(action='/createart' method='POST')
                 .form-group
                   h3 
                     strong Article title
@@ -19,13 +29,9 @@ append body
                     strong Description
                   input.form-control(type='text' name='description' placeholder='Enter description here')
                 .form-group
-                  h3
-                    strong Media 
-                  input(type='file' name='media' placeholder='Enter media name here')
-                .form-group
                   h3 
                     strong Thumbnail 
-                  input(type='file' name='thumbnail' placeholder='Enter thumbnail name here')
+                  input.form-control(type='text' name='thumbnail' placeholder='Enter thumbnail name here')
                 .form-group
                   h3 
                     strong Article data

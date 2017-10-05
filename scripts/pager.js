@@ -11,6 +11,8 @@ class Pager {
     else
       this.loggedIn = false;
     if (typeof req.user !== 'undefined') {
+      if (req.user.localUsername === 'angel')
+        this.aauth = true;
       if (req.query.id === req.user.localId)
         this.owner = true;
       else
