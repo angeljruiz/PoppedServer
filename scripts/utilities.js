@@ -45,27 +45,6 @@ module.exports = (app, db, passport) => {
     res.redirect('/creator')
   });
 
-  app.get('/article/media/:id', (req, res) => {
-    db.loadArticleImages({ id: req.params.id, media: true }, media => {
-      res.write(media, 'binary');
-      res.end(null, 'binary');
-    });
-  });
-
-  app.get('/article/thumbnail/:id', (req, res) => {
-    db.loadArticleImages({ id: req.params.id, thumbnail: true }, media => {
-      res.write(media, 'binary');
-      res.end(null, 'binary');
-    });
-  });
-
-  app.get('/article/:id/thumbnail.png', (req, res) => {
-    db.loadArticleImages({ id: req.params.id, thumbnail: true }, media => {
-      res.write(media, 'binary');
-      res.end(null, 'binary');
-    });
-  });
-
   app.post('/new', mw.validateInfo, passport.authenticate('signup', { session: true, failureRedirect: '/signup' }), (req, res) => {
     new User({ localUsername: req.user.localUsername }, (err, user) => {
       req.login(user, function(err) {

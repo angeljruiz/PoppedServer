@@ -107,7 +107,8 @@ class Database {
         if (err)
           return console.error('Error running query', err);
         if (fn)
-          fn(null, res.rows[0].data);
+          if (res.rows[0])
+            fn(null, res.rows[0].data);
       });
     }
     createart(title, desc, thumbnail, data, fn) {
@@ -131,26 +132,7 @@ class Database {
           return fn(articles);
       });
     }
-    loadArticleImages(input, fn) {
-      let ret = (err, res) => {
-        if (typeof res === 'undefined')
-          return;
-        if (!res)
-          return;
-        if (fn) {
-          if (input.thumbnail)
-            fn(res.rows[0].thumbnail);
-          else
-            fn(res.rows[0].media);
-        }
-      }
-      if (input.media)
-        pool.query('SELECT media FROM articles WHERE id = ($1)', [input.id], ret);
-      else
-        pool.query('SELECT thumbnail FROM articles WHERE id = ($1)', [input.id], ret);
-    }
     loadArticle(id, fn) {
-      let data = 0;
       pool.query('SELECT title, data, description, thumbnail FROM articles WHERE id = ($1)', [id], (err, res) => {
         if(err)
             return console.error('error running query', err);
