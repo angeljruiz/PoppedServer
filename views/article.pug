@@ -10,15 +10,6 @@ append resources
   meta(property="og:description"        content=description)
   meta(property="og:image"              content='http://clickwithit.us/media/' + thumbnail)
   meta(property="fb:app_id"             content="124609491488258")
-  script(async src="https://www.googletagmanager.com/gtag/js?id=UA-107735583-1")
-  script.
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'UA-107735583-1');
-
-    
 append body
   +initFb
   .row
@@ -32,4 +23,16 @@ append body
           .sharethis-inline-share-buttons
           .text-center
             +fbComments
-  
+  script(async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js")
+  script.
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-8413214542052984",
+      enable_page_level_ads: true
+    });
+  script(async src="https://www.googletagmanager.com/gtag/js?id=UA-107735583-1")
+  script.
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-107735583-1');
