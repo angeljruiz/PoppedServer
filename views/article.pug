@@ -10,6 +10,14 @@ append resources
   meta(property="og:description"        content=description)
   meta(property="og:image"              content='http://clickwithit.us/media/' + thumbnail)
   meta(property="fb:app_id"             content="124609491488258")
+  script(async src="https://www.googletagmanager.com/gtag/js?id=UA-107735583-1")
+  script.
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-107735583-1');
+
     
 append body
   +initFb
