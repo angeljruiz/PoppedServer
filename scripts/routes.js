@@ -58,6 +58,19 @@ module.exports = (app, db, passport) => {
     })
   });
 
+  app.get('/editor/:id', (req, res) => {
+    res.locals.editing = true;
+    if (!req.isAuthenticated() || req.user.localUsername !== 'angel')
+      return res.redirect('/');
+    db.loadArticle(req.params.id, data => {
+      if (data)
+        for (let prop in data)
+          res.locals[prop] = data[prop];
+        res.locals.id = req.params.id;
+      res.render('creator');
+    });
+  });
+
   app.get('/user', mw.isLoggedOn, (req, res) => {
     new User({ localId: req.query.id, messages: true }, (err, user) => {
       if(err)

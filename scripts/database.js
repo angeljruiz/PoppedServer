@@ -111,14 +111,16 @@ class Database {
             fn(null, res.rows[0].data);
       });
     }
-    createart(title, desc, thumbnail, data, fn) {
+    createart(title, desc, thumbnail, data, id) {
       if (title && desc && thumbnail) {
-        pool.query('INSERT INTO articles (title, description, thumbnail, data) VALUES ($1, $2, $3, $4)', [title, desc, thumbnail, data], (err, res) => {
-            if(err)
-                return console.error('error running query', err);
-            if (fn)
-              fn();
-        });
+        let func = (err, res) => {
+          if(err)
+              return console.error('error running query', err);
+        }
+        if (id !== '-1')
+          pool.query('UPDATE articles SET (title, description, thumbnail, data) = ($1, $2, $3, $4) WHERE id = ($5)', [title, desc, thumbnail, data, id], func);
+        else
+          pool.query('INSERT INTO articles (title, description, thumbnail, data) VALUES ($1, $2, $3, $4)', [title, desc, thumbnail, data], func);
       }
     }
     listarticles(fn) {
@@ -133,11 +135,11 @@ class Database {
       });
     }
     loadArticle(id, fn) {
-      pool.query('SELECT title, data, description, thumbnail FROM articles WHERE id = ($1)', [id], (err, res) => {
+      pool.query('SELECT * FROM articles WHERE id = ($1)', [id], (err, res) => {
         if(err)
             return console.error('error running query', err);
           if (fn && res.rows[0])
-            fn({title: res.rows[0].title, body: res.rows[0].data, description: res.rows[0].description, thumbnail: res.rows[0].thumbnail});
+            fn({title: res.rows[0].title, body: res.rows[0].data, description: res.rows[0].description, thumbnail: res.rows[0].thumbnail, id: res.rows[0].id});
           else
             fn();
       })

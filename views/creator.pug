@@ -19,23 +19,27 @@ append body
       .card
           .card-body
             .form-group
-              form(action='/createart' method='POST')
-                .form-group
-                  h3 
-                    strong Article title
-                  input.form-control(type='text' name='title' placeholder='Enter title here')
-                .form-group
-                  h3 
-                    strong Description
-                  input.form-control(type='text' name='description' placeholder='Enter description here')
-                .form-group
-                  h3 
-                    strong Thumbnail 
-                  input.form-control(type='text' name='thumbnail' placeholder='Enter thumbnail name here')
-                .form-group
-                  h3 
-                    strong Article data
-                  textarea.articledata.form-control(rows=6 name='data' placeholder='Enter article data here')
-                input.btn.btn-primary(type='submit' value='Submit')
-                
-                
+              if (editing)
+                form(action='/createart?id=' + id method='POST' id='creator')
+              else
+                form(action='/createart' method='POST' id='creator')
+              input(type='hidden' name='id' value=id || '-1' form='creator')
+              .form-group
+                h3 
+                  strong Article title
+                input.form-control(type='text' name='title' placeholder='Enter title here' value= editing? title : "" form='creator')
+              .form-group
+                h3 
+                  strong Description
+                input.form-control(type='text' name='description' placeholder='Enter description here' value= editing? description : "" form='creator')
+              .form-group
+                h3 
+                  strong Thumbnail 
+                input.form-control(type='text' name='thumbnail' placeholder='Enter thumbnail name here' value= editing? thumbnail : "" form='creator')
+              .form-group
+                h3 
+                  strong Article data
+                textarea.articledata.form-control(rows=6 name='data' placeholder='Enter article data here' form='creator')= editing? body : ""
+              input.btn.btn-primary(type='submit' value='Submit' form='creator')
+              
+              

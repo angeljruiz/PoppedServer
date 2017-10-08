@@ -38,9 +38,8 @@ module.exports = (app, db, passport) => {
   });
 
   app.post('/createart', (req, res) => {
-    console.log(req.body);
     if (req.isAuthenticated() && req.user.localUsername === 'angel') {
-      db.createart(req.body.title, req.body.description, req.body.thumbnail, req.body.data);
+      db.createart(req.body.title, req.body.description, req.body.thumbnail, req.body.data, req.body.id);
     }
     res.redirect('/creator')
   });
