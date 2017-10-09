@@ -42,7 +42,6 @@ require('./scripts/routes.js')(app, db, passport);
 var autoViews = {};
 const reg = /(login|signup)/;
 
-
 app.use( (req, res, next) => {
   let path = req.path.toLowerCase();
   if (reg.test(path) && req.isAuthenticated())

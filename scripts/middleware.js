@@ -37,5 +37,26 @@ module.exports = {
     } catch(e) {
       iterator.throw(e);
     }
+  },
+
+  formatDate: date => {
+    let monthNames = [
+      "January", "February", "March",
+      "April", "May", "June", "July",
+      "August", "September", "October",
+      "November", "December"
+    ];
+
+    let day = date.getDate();
+    let monthIndex = date.getMonth();
+    let year = date.getFullYear();
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    let c = hours > 12 ? 'Pm' : 'Am';
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    hours = hours % 12;
+    let time = hours + ':' + minutes;
+
+    return monthNames[monthIndex] + ' ' + day + ' at ' + time + ' ' + c;
   }
 }

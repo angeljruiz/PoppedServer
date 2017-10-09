@@ -52,7 +52,7 @@ module.exports = (app, db, passport) => {
   app.get('/article/:id', (req, res) => {
     db.loadArticle(req.params.id, data => {
       if (data)
-        res.render('article', { title: data.title, body: data.body, id: req.params.id, loggedIn: req.isAuthenticated(), description: data.description, thumbnail: data.thumbnail });
+        res.render('article', { title: data.title, body: data.body, id: req.params.id, loggedIn: req.isAuthenticated(), description: data.description, thumbnail: data.thumbnail, date: data.date });
       else
         res.redirect('/articlelist');
     })
@@ -66,7 +66,9 @@ module.exports = (app, db, passport) => {
       if (data)
         for (let prop in data)
           res.locals[prop] = data[prop];
-        res.locals.id = req.params.id;
+      res.locals.id = req.params.id;
+      if (res.locals.date === '-1')
+        res.locals.date = mw.formatDate(new Date());
       res.render('creator');
     });
   });

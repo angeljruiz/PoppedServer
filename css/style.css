@@ -11,12 +11,21 @@ body {
   margin: 0 auto;
 }
 
+h6 > a {
+  color: #337ab7
+}
+
 .footer {
   position: absolute;
   bottom: 0;
   width: 100%;
   height: 32px;
   line-height: 32px;
+}
+
+.date {
+  color: #AAAAAA;
+  font-size: 14px;
 }
 
 .footer a {
