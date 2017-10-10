@@ -18,7 +18,9 @@ class Pager {
       else
         this.owner = false;
     } else {
+      this.aauth = false;
       this.user = 0;
+      this.owner = false;
     }
     if (req.path === '/')
       this.owner = true;

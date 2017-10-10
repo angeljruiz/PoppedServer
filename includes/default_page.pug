@@ -9,7 +9,7 @@ mixin particles()
     });
 
 mixin footer()
-  .footer.bg-light
+  .footer
     +icons
     a.float-right.mr-2(href='/privatepolicy' style='font-size:12px') Privacy
     .text-center(style='font-size:12px') &copy 2017 Angel Ruiz-Bates
@@ -18,7 +18,7 @@ mixin navvy(index)
   -
       var pages = [ 'Home', 'Users', 'Articles', 'About'];
       var urls = [ '/', '/list', '/articlelist', '/about' ];  
-  nav.navbar.navbar-expand-xl.bg-light.mb-4.navbar-light
+  nav.navbar.navbar-expand-xl.mb-4.navbar-light.sticky-top
     //- .navbar-brand.mr-auto Testr
     button.navbar-toggler.ml-auto.btn(type='button' data-toggle='collapse' data-target='#navcollapse')
       span.navbar-toggler-icon

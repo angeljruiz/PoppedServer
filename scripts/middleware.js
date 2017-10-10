@@ -52,9 +52,10 @@ module.exports = {
     let year = date.getFullYear();
     let hours = date.getHours();
     let minutes = date.getMinutes();
-    let c = hours > 12 ? 'Pm' : 'Am';
+    let c = hours >= 12 ? 'Pm' : 'Am';
     minutes = minutes < 10 ? '0' + minutes : minutes;
     hours = hours % 12;
+    hours = hours === 0? 12 : hours;
     let time = hours + ':' + minutes;
 
     return monthNames[monthIndex] + ' ' + day + ' at ' + time + ' ' + c;

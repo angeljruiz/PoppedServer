@@ -125,7 +125,7 @@ class Database {
     }
     listarticles(fn) {
       let articles = [];
-      pool.query('SELECT * FROM articles', (err, res) => {
+      pool.query('SELECT * FROM articles ORDER BY id DESC', (err, res) => {
           if(err)
               return console.error('error running query', err);
           for (let i=0; i<res.rows.length; i++) {

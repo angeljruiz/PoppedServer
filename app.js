@@ -38,6 +38,7 @@ app.locals.pretty = true;
 
 require('./scripts/utilities.js')(app, db, passport);
 require('./scripts/routes.js')(app, db, passport);
+var mw = require('./scripts/middleware.js')
 
 var autoViews = {};
 const reg = /(login|signup)/;
@@ -46,6 +47,8 @@ app.use( (req, res, next) => {
   let path = req.path.toLowerCase();
   if (reg.test(path) && req.isAuthenticated())
     return res.redirect('/');
+  if (path === '/creator')
+    res.locals.date = mw.formatDate(new Date());
   if (autoViews[path]) return res.render(autoViews[path]);
   if (fs.existsSync(__dirname + '/views' + path + '.pug')) {
     autoViews[path] = path.replace(/^\//, '');
