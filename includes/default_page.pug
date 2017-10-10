@@ -11,20 +11,22 @@ mixin particles()
 mixin footer()
   .footer
     +icons
-    a.float-right.mr-2(href='/privatepolicy' style='font-size:12px') Privacy
+    a.float-right.mr-2(href='/privatepolicy' style='font-size:14px') Privacy
+    a.float-right.mr-2(href='/contact' style='font-size:14px') Contact Us
+    a.float-right.mr-2(href='/about' style='font-size:14px') About
     .text-center(style='font-size:12px') &copy 2017 Angel Ruiz-Bates
 
 mixin navvy(index)
   -
-      var pages = [ 'Home', 'Users', 'Articles', 'About'];
-      var urls = [ '/', '/list', '/articlelist', '/about' ];  
+      var pages = [ 'Home', 'Users', 'Articles'];
+      var urls = [ '/', '/list', '/articlelist' ];  
   nav.navbar.navbar-expand-xl.mb-4.navbar-light.sticky-top
     //- .navbar-brand.mr-auto Testr
     button.navbar-toggler.ml-auto.btn(type='button' data-toggle='collapse' data-target='#navcollapse')
       span.navbar-toggler-icon
     #navcollapse.collapse.navbar-collapse.justify-content-end
       ul.navbar-nav   
-        each i in [0, 1, 2, 3]
+        each i in [0, 1, 2]
           li.nav-item: a.nav-link(href=urls[i])= pages[i]
         if(loggedIn)
           li.nav-item: a.nav-link(href='/logout')
