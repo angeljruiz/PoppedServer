@@ -52,7 +52,7 @@ module.exports = (app, db, passport) => {
   app.get('/article/:id', (req, res) => {
     db.loadArticle(req.params.id, data => {
       if (data)
-        res.render('article', { title: data.title, body: data.body, id: req.params.id, loggedIn: req.isAuthenticated(), description: data.description, thumbnail: data.thumbnail, date: data.date });
+        res.render('article', { title: data.title, body: data.body, id: req.params.id, loggedIn: req.isAuthenticated(), description: data.description, thumbnail: data.thumbnail, date: data.date , author: data.author });
       else
         res.redirect('/articlelist');
     })

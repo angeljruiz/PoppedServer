@@ -118,7 +118,7 @@ class Database {
               return console.error('error running query', err);
         }
         if (input.id !== '-1')
-          pool.query('UPDATE articles SET (title, description, thumbnail, data, date) = ($1, $2, $3, $4, $5) WHERE id = ($6)', [input.title, input.desc, input.thumbnail, input.data, input.date, input.id], func);
+          pool.query('UPDATE articles SET (title, description, thumbnail, data, date, author) = ($1, $2, $3, $4, $5, $6) WHERE id = ($7)', [input.title, input.desc, input.thumbnail, input.data, input.date, input.author, input.id], func);
         else
           pool.query('INSERT INTO articles (title, description, thumbnail, data, date) VALUES ($1, $2, $3, $4, $5)', [input.title, input.desc, input.thumbnail, input.data, input.date], func);
       }
@@ -139,7 +139,7 @@ class Database {
         if(err)
             return console.error('error running query', err);
           if (fn && res.rows[0])
-            fn({title: res.rows[0].title, body: res.rows[0].data, description: res.rows[0].description, thumbnail: res.rows[0].thumbnail, id: res.rows[0].id, date: res.rows[0].date || '-1'});
+            fn({title: res.rows[0].title, body: res.rows[0].data, description: res.rows[0].description, thumbnail: res.rows[0].thumbnail, id: res.rows[0].id, date: res.rows[0].date, author: res.rows[0].author || '-1'});
           else
             fn();
       })

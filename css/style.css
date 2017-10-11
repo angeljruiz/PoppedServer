@@ -11,6 +11,12 @@ body {
   margin: 0 auto;
 }
 
+.ficon {
+  position: relative;
+  bottom: -2px;
+  height: 30px;
+}
+
 h6 > a {
   color: #337ab7
 }
@@ -22,6 +28,11 @@ h6 > a {
   height: 32px;
   line-height: 32px;
   background-color: #EEE;
+}
+
+.sig {
+  position: relative;
+  bottom: -16px;
 }
 
 .navbar {
