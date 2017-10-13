@@ -4,7 +4,7 @@ append resources
   title Signup
   form(action='/new' method='POST' id='signup')
 append body
-  .col-md-6.mx-auto
+  .col-md-4.mx-auto
     .card.text-center
       .card-header
         i.fa.fa-user-plus.fa-lg.mr-1
@@ -15,23 +15,23 @@ append body
             = flash.taken || flash.incorrect
         .form-group
           .row.justify-content-center
-            .col-md-7
+            .col-md-8
               .input-group
                 .input-group-addon Username
                 input.form-control(type='text' name='username' form='signup')
         .form-group
           .row.justify-content-center
-            .col-md-7
+            .col-md-8
               .input-group
                 .input-group-addon Email
                 input.form-control(type='text' name='email' form='signup')
         .form-group
           .row.justify-content-center
-            .col-md-7
+            .col-md-8
               .input-group
                 .input-group-addon Password
                 input.form-control(type='password' name='password' form='signup')
         .form-group
           .row.justify-content-center
-            .col-md-7
+            .col-md-4
               input.form-control(type='submit' class='btn btn-primary' value='Register' form='signup')
