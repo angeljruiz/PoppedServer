@@ -3,6 +3,8 @@ html {
   min-height: 100%;
 }
 body {
+  background-image: url('/media/bg.jpeg');
+  background-size: stretch;
   margin-bottom: 78px;
 }
 
@@ -50,7 +52,7 @@ h6 > a {
 }
 
 .card {
-  background-color: #EEE
+  background-color: rgba(238,238,238, .8)
 }
 
 .date {
