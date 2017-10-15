@@ -11,9 +11,9 @@ mixin particles()
 mixin footer()
   .footer
     +icons
-    a.float-right.mr-2(href='/privatepolicy' style='font-size:14px') Privacy
-    a.float-right.mr-2(href='/contact' style='font-size:14px') Contact
-    a.float-right.mr-2(href='/about' style='font-size:14px') About
+    a.float-right.mr-2.pl-2.footer-link(href='/privatepolicy') Privacy
+    a.float-right.mr-2.pl-2.footer-link(href='/contact') Contact
+    a.float-right.mr-2.footer-link(href='/about') About
     br
     .text-center.cr-name(style='font-size:12px') &copy 2017 Angel Ruiz-Bates
 
@@ -21,8 +21,7 @@ mixin navvy(index)
   -
       var pages = [ 'Home', 'Users', 'Articles'];
       var urls = [ '/', '/list', '/articlelist' ];  
-  nav.navbar.navbar-expand-xl.mb-4.navbar-light.sticky-top
-    //- .navbar-brand.mr-auto Testr
+  nav.navbar.navbar-expand-xl.mb-4.navbar-light.sticky-top.nav-pills
     button.navbar-toggler.ml-auto.btn(type='button' data-toggle='collapse' data-target='#navcollapse')
       span.navbar-toggler-icon
     #navcollapse.collapse.navbar-collapse.justify-content-end
@@ -59,9 +58,7 @@ mixin fbComments()
 mixin shareThis()
   script(type="text/javascript" src="//platform-api.sharethis.com/js/sharethis.js#property=59b99f6524814000110af347&product=inline-share-buttons")
 mixin icons
-  a.float-left.ml-2(href='https://www.facebook.com/AngelitoJB')
-    i.fa-2x.fa.fa-facebook.ficon.clearfix
-  a.float-left.ml-3(href= 'https://github.com/angeljruiz')
+  a.float-left.ml-1(href= 'https://github.com/angeljruiz')
     i.fa-2x.fa.fa-github
   
   //- a(href='https://www.linkedin.com/in/ruizaj')
