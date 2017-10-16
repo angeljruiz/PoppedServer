@@ -3,8 +3,8 @@ html {
   min-height: 100%;
 }
 body {
-  background-image: url('/media/bg.jpeg');
-  background-size: stretch;
+  /*background-image: url('/media/bg.jpeg');
+  background-size: stretch;*/
   margin-bottom: 78px;
 }
 
