@@ -3,16 +3,18 @@ html {
   min-height: 100%;
 }
 body {
-  /*background-image: url('/media/bgd.jpeg');
-  background-size: 100%;*/
-  background-color: #337ab7;
+  background-color: black;
   margin-bottom: 78px;
 }
 
 .micon {
-  content: url('/media/icon.png');
+  content: url('/media/pf.png');
   display: block;
   margin: 0 auto;
+}
+
+a {
+  color: #0099ff;
 }
 
 h6 > a {
@@ -40,9 +42,19 @@ h6 > a {
 
 .cr-name {
   position: relative;
-  font-size: 12px;
+  font-size:12px;
+  /*color: rgba(255, 255, 255, .5);*/
+  color: #0099ff;
   height: 0;
   bottom: -22px;
+}
+
+.bg-dark {
+  background-color: #9a9a9a;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: #0099ff
 }
 
 .sig {
@@ -55,7 +67,7 @@ h6 > a {
 }
 
 .card {
-  background-color: rgb(238,238,238)
+  background-color: rgb(190, 190, 190)
 }
 
 .date {
@@ -69,13 +81,6 @@ h6 > a {
 
 .shadow {
   box-shadow: 10px 10px 5px gray;
-}
-
-#particles {
-    position: absolute;
-    width: 100px;
-    height: 800px;
-    z-index: -1;
 }
 
 .static {

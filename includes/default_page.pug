@@ -1,6 +1,6 @@
 mixin header()
   a(href='/')
-    img.micon(src='/media/icon.png' width='300' height='100')
+    img.micon.rounded.img-fluid
         
 mixin particles()
   script.
@@ -9,19 +9,19 @@ mixin particles()
     });
 
 mixin footer()
-  .footer
+  .footer(class=primeFactor? 'bg-dark' : '')
     +icons
     a.float-right.mr-2.pl-2.footer-link(href='/privatepolicy') Privacy
     a.float-right.mr-2.pl-2.footer-link(href='/contact') Contact
     a.float-right.mr-2.footer-link(href='/about') About
     br
-    .text-center.cr-name(style='font-size:12px') &copy 2017 Angel Ruiz-Bates
+    .text-center.cr-name &copy 2017 Angel Ruiz-Bates
 
 mixin navvy(index)
   -
-      var pages = [ 'Home', 'Users', 'Articles'];
-      var urls = [ '/', '/list', '/articlelist' ];  
-  nav.navbar.navbar-expand-xl.mb-4.navbar-light.sticky-top.nav-pills
+      var pages = [ 'Home', 'Advising', 'Articles'];
+      var urls = [ '/', '/advising', '/articlelist' ];  
+  nav.navbar.navbar-expand-xl.mb-4.sticky-top.nav-pills(class=primeFactor? 'navbar-dark bg-dark' : 'navbar-light')
     button.navbar-toggler.ml-auto.btn(type='button' data-toggle='collapse' data-target='#navcollapse')
       span.navbar-toggler-icon
     #navcollapse.collapse.navbar-collapse.justify-content-end

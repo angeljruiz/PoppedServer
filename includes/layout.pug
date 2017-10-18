@@ -6,13 +6,16 @@ html
       meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
       link(href='../vendor/bootstrap.min.css' rel='stylesheet')
       link(href='../vendor/font-awesome.min.css' rel='stylesheet')
-      link(href='../css/style.css' rel='stylesheet')
+      if (primeFactor)
+        link(href='../css/pf.css' rel='stylesheet')
+      else
+        link(href='../css/style.css' rel='stylesheet')
       link(rel="icon" href="../media/icon.ico")
       if (showTests)
         link(href='../vendor/mocha.css')
       script(src='https://code.jquery.com/jquery-3.2.1.slim.min.js')
       include ../includes/default_page
-  body(style='background-color: #337ab7')
+  body
     +header()
     +navvy
     .container-fluid

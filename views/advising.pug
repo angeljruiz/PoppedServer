@@ -1,0 +1,34 @@
+extends ../includes/layout.pug
+
+append resources
+  title Code Advising
+  
+append body
+  .card
+    .card-header
+      h3 Need Code Advising?
+    .card-body
+      p Are you stuck on a problem or bug and just need help? Need help building the backend to your app or service? I have you covered! My specialties include C++, Javascript or Node.js, Java, and SQL or database integration/management.
+      p I guarantee we will be able to blow through it together!
+      p Prices - 30 minutes for $15 or 1 hour for $25.
+      p After purchasing, we will be in contact so you could describe what you need help with and so we can set up a time to conference. 
+      
+      .row
+        .col-md-2
+          .card.text-center
+            .card-header: h3 30 Minutes
+            .card-body
+              form(action='https://www.paypal.com/cgi-bin/webscr', method='post', target='_top')
+                input(type='hidden', name='cmd', value='_s-xclick')
+                input(type='hidden', name='hosted_button_id', value='3ZVCT982WA8VJ')
+                input(type='image', src='https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif', border='0', name='submit', alt='PayPal - The safer, easier way to pay online!')
+                img(alt='', border='0', src='https://www.paypalobjects.com/en_US/i/scr/pixel.gif', width='1', height='1')
+        .col-md-2
+          .card.text-center
+            .card-header: h3 1 Hour
+            .card-body
+              form(action='https://www.paypal.com/cgi-bin/webscr', method='post', target='_top')
+                input(type='hidden', name='cmd', value='_s-xclick')
+                input(type='hidden', name='hosted_button_id', value='AH3NDSC6DXWKW')
+                input(type='image', src='https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif', border='0', name='submit', alt='PayPal - The safer, easier way to pay online!')
+                img(alt='', border='0', src='https://www.paypalobjects.com/en_US/i/scr/pixel.gif', width='1', height='1')
